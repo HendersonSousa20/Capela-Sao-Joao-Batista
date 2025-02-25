@@ -1,0 +1,316 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text-color: white;
+  --bg-url: url("img/background_desktop.jpg");
+  --stroke-color: rgba(255, 255, 255, 0.5);
+  --surface-color: rgba(0, 0, 0, 0.2);
+  --surface-color-hover: rgba(255, 255, 255, 0.5);
+  --highlight-color: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  background: var(--bg-url);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  height: 100vh;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+body * {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  animation: fadeSlide 1s ease-in-out;
+}
+
+.conteiner_horarios {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 24px;
+  width: 100%;
+  max-width: 400px;
+  margin: 250px auto 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(13.4px);
+  -webkit-backdrop-filter: blur(13.4px);
+  animation: popUp 0.8s ease-out;
+}
+
+.conteiner_horarios ul {
+  text-align: center;
+
+}
+
+
+#container {
+  width: 100%;
+  max-width: 588px;
+  margin: 56px auto 0px;
+  padding: 0 24px;
+  animation: popUp 0.8s ease-out;
+}
+
+#profile {
+  text-align: center;
+  padding: 24px;
+  animation: bounceIn 1s ease-in-out;
+}
+
+#profile img {
+  min-height: 180px;
+  border-radius: 50px;
+  width: 180px;
+  transition: transform 0.5s ease-in-out;
+}
+
+#profile img:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+#profile p {
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 8px;
+}
+
+#switch {
+  position: relative;
+  width: 64px;
+  margin: 4px auto;
+}
+
+#switch button {
+  width: 32px;
+  height: 32px;
+  background: white var(--switch-bg) no-repeat center;
+  border: 0;
+  border-radius: 50px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  transform: translateY(-50%);
+  animation: slide-back 0.2s;
+}
+
+.light #switch button {
+  animation: slide-in 0.2s forwards;
+}
+
+#switch button:hover {
+  outline: 8px solid var(--highlight-color);
+  transform: scale(1.1);
+}
+
+#switch span {
+  display: block;
+  width: 64px;
+  height: 24px;
+  background: var(--surface-color);
+  border: 1px solid var(--stroke-color);
+  backdrop-filter: blur(4px);
+  border-radius: 9999px;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+ul li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--surface-color);
+  border: 1px solid var(--stroke-color);
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+ul li a:hover {
+  background: var(--surface-color-hover);
+  border: 1.5px solid var(--text-color);
+  transform: scale(1.05);
+}
+
+#social-links {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+  font-size: 24px;
+}
+
+#social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  border-radius: 50%;
+}
+
+#social-links a:hover {
+  background: var(--highlight-color);
+  transform: scale(1.2);
+}
+
+footer {
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  animation: fadeSlide 1.2s ease-in-out;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes fadeSlide {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes popUp {
+  from {
+      transform: scale(0.8);
+      opacity: 0;
+  }
+  to {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+      transform: scale(0.8);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+@keyframes slide-in {
+  from {
+      left: 0;
+  }
+  to {
+      left: 50%;
+  }
+}
+
+@keyframes slide-back {
+  from {
+      left: 50%;
+  }
+  to {
+      left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+      background-image: url("./img/cathedral\ in\ Roma.jpg");
+  }
+}
+
+/* Container do mapa */
+.map {
+  overflow: hidden;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  position: relative;
+  height: 0;
+  background: #f0f0f0; /* Fundo de cor clara para um design moderno */
+  border: 2px solid #ccc; /* Adiciona uma borda */
+  border-radius: 10px; /* Bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave */
+}
+
+/* Iframe do mapa */
+.map iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0; /* Remove a borda padrão do iframe */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .map {
+    padding-bottom: 75%; /* Ajusta a proporção para tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .map {
+    padding-bottom: 100%; /* Ajusta a proporção para smartphones */
+    border-width: 1px; /* Bordas mais finas em dispositivos muito pequenos */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra mais suave em dispositivos móveis */
+  }
+}
+
+
+#back-button {
+  text-align: left;
+  margin: 20px 10px;
+}
+
+#back-button button {
+  font-family: 'Times New Roman', Times, serif;  
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(13.4px);
+  -webkit-backdrop-filter: blur(13.4px);
+  animation: popUp 0.8s ease-out;
+
+}
+
+#back-button button:hover {
+  background-color: goldenrod;
+}
+
