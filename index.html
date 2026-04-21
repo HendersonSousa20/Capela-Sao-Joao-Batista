@@ -1,79 +1,779 @@
 <!DOCTYPE html>
-<html lang="pt-br" >
+<html lang="pt-br" class="scroll-smooth">
 
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comunidade São João Batista - Um lugar de fé, acolhimento e encontro. Venha participar das nossas missas e pastorais.">
+    <title>Comunidade São João Batista | Fé e Acolhimento</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Poppins:wght@300;500;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton+SC&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    
-     <title>Capela São João Batista - Horários, Eventos e Localização</title>
-     <meta name="description" content="Capela São João Batista - Confira os horários das missas, eventos e informações sobre a nossa comunidade.">
-     <meta name="keywords" content="Capela São João Batista, Igreja, Missa, Eventos, Horários, Catolicismo">
-     <meta name="author" content="Henderson Sousa">
-   
-    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/155419/isolated/preview/b4e5db4cd3babb20a443ca6b7edcba0b-icone-de-cruz-crista-espessa.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              liturgy: {
+                primary: 'var(--liturgy-main)',
+                soft: 'var(--liturgy-soft)',
+              },
+              brand: {
+                dark: '#0f141e',
+                light: '#fcfaf7',
+                gold: '#B68D40'
+              }
+            },
+            fontFamily: {
+              display: ['Anton SC', 'sans-serif'],
+              sans: ['Montserrat', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      :root {
+        /* Fallback Temporário */
+        --liturgy-main: #2D5A27;
+        --liturgy-soft: #E9F2E8;
+      }
+
+      .glass-nav {
+        background: rgba(252, 250, 247, 0.9);
+        backdrop-filter: blur(12px);
+      }
+
+      .hero-mask {
+        background: linear-gradient(to bottom, rgba(15, 20, 30, 0.6), rgba(15, 20, 30, 0.9));
+      }
+
+      .transition-liturgy {
+        transition: background-color 1s ease, color 1s ease, border-color 1s ease;
+      }
+
+      .bento-card {
+        @apply bg-white border border-gray-100 p-8 rounded-3xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+      }
+
+      /* Ocultar barra de rolagem no menu mobile */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
     <script type="text/javascript" src="./index.js" defer=""></script>
-    <link rel="stylesheet" href="./style.css">
-
+    <link rel="stylesheet" href="./index.css">
   </head>
 
-  <body>
+  <body class="bg-brand-light text-brand-dark font-sans transition-liturgy antialiased selection:bg-liturgy-primary selection:text-white">
 
-    <div id="container">
-      <div id="profile">
-        <img src="./img/avatar (3).png" alt="image de são João Batista">
-        <h4>Capela São João Batista</h4>
-        <p>@capelasjb_</p>
-      </div>
-
-      
-
-      <ul>
-        <li>
-          <a href="./horarios.html" >Horários</a>
-        </li>
-
-        <li >
-          <a id="say" href="#">Eventos</a>
-        </li>
-
-        <li>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSekW-1KBADJqkeaxWpR4QrYtW-CrXN_vJ1pxOUfsxVFcQ16cA/viewform">Formulários</a>
-        </li>
-
-        <li>
-          <a href="./localizacao.html">Localização</a>
-        </li>
-      </ul>
-      <div id="social-links">
-
-
-        <a href="https://www.instagram.com/capelasjb_/?locale=pt-br-TW&hl=am-et" target="_blank"><ion-icon name="logo-instagram"></ion-icon>
-        </a>
-
-        <a href="#" target="_blank"><ion-icon name="logo-whatsapp"></ion-icon>
-        </a>
-
-        <a href="https://www.facebook.com/p/Capela-S%C3%A3o-Jo%C3%A3o-Batista-100068719305703/" target="_blank"><ion-icon name="logo-facebook"></ion-icon>
-        </a>
-
-
-      </div>
-
-      <footer>
-        <p>Feito por <a href="https://henderson-sousa-portfolio-ruby.vercel.app/" target="blank">Henderson Sousa</a></p>
-      </footer>
+    <div id="liturgy-bar" class="bg-liturgy-primary text-white text-[10px] md:text-xs uppercase tracking-[0.3em] py-2.5 text-center font-bold transition-liturgy shadow-md relative z-50">
+      Calculando Tempo Litúrgico...
     </div>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <header class="sticky top-0 z-40 glass-nav border-b border-liturgy-primary/10 transition-all duration-300" id="main-header">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#home" class="flex items-center gap-4 group">
+          <div class="w-12 h-12 rounded-full border-2 border-liturgy-primary p-0.5 transition-liturgy overflow-hidden">
+            <img src="./img/icon sao joao batista.jpg" alt="Logo" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+          </div>
+          <span class="font-display text-2xl tracking-tighter uppercase mt-1">São João Batista</span>
+        </a>
 
-    <script src="./script.js"></script>
+        <nav class="hidden lg:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest">
+          <a href="#about" class="hover:text-liturgy-primary transition-colors">A Comunidade</a>
+          <a href="#pastorais" class="hover:text-liturgy-primary transition-colors">Pastorais</a>
+          <a href="#dizimo" class="hover:text-liturgy-primary transition-colors">Dízimo</a>
+          <a href="#faq" class="hover:text-liturgy-primary transition-colors">Dúvidas</a>
+          <a href="#contact" class="bg-brand-dark text-white px-6 py-3 rounded-full hover:bg-liturgy-primary transition-all duration-300 shadow-lg hover:shadow-liturgy-primary/30">Fale Conosco</a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="lg:hidden text-brand-dark p-2" aria-label="Abrir Menu">
+          <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+      </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-dark text-white z-50 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+      <button id="close-menu-btn" class="absolute top-6 right-6 text-white p-2" aria-label="Fechar Menu">
+        <i data-lucide="x" class="w-10 h-10"></i>
+      </button>
+      <nav class="flex flex-col items-center gap-8 font-display text-3xl uppercase tracking-widest">
+        <a href="#home" class="mobile-link hover:text-liturgy-primary transition-colors">Início</a>
+        <a href="#about" class="mobile-link hover:text-liturgy-primary transition-colors">Comunidade</a>
+        <a href="#pastorais" class="mobile-link hover:text-liturgy-primary transition-colors">Pastorais</a>
+        <a href="#dizimo" class="mobile-link hover:text-liturgy-primary transition-colors">Dízimo</a>
+        <a href="#faq" class="mobile-link hover:text-liturgy-primary transition-colors">Dúvidas</a>
+        <a href="#contact" class="mobile-link text-liturgy-primary mt-4 border-b-2 border-liturgy-primary pb-1">Contato</a>
+      </nav>
+    </div>
+
+    <section id="home" class="relative min-h-[90vh] flex items-center overflow-hidden bg-brand-dark">
+      <img src="https://viagensdefe.com.br/wp-content/uploads/2020/09/Capela-das-velas-SeturSP.jpg" alt="Interior da Capela" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105 animate-pulse" style="animation-duration: 20s;">
+      <div class="absolute inset-0 hero-mask"></div>
+
+      <div class="container mx-auto px-6 relative z-10 py-20">
+        <div class="max-w-4xl">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
+            <span class="w-2 h-2 rounded-full bg-liturgy-primary animate-ping"></span>
+            <h2 id="liturgy-season-name" class="text-white font-bold tracking-[0.3em] uppercase text-xs">
+              Tempo Litúrgico
+            </h2>
+          </div>
+
+          <h1 class="text-white text-5xl md:text-7xl lg:text-9xl font-display leading-[0.9] mb-8 uppercase text-balance">
+            Voz que clama <br> no <span class="text-transparent border-b-4 border-liturgy-primary transition-liturgy" style="-webkit-text-stroke: 1px white;">deserto</span>
+          </h1>
+          <p class="text-gray-300 text-lg md:text-xl max-w-xl font-light leading-relaxed mb-10">
+            Inspirados por São João Batista, preparamos o caminho para o Senhor em cada coração, em cada gesto de acolhimento e na vivência em comunidade.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#about" class="bg-liturgy-primary text-white px-8 py-4 rounded-sm font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-brand-dark transition-colors duration-300 shadow-lg">
+              Conheça a Capela
+            </a>
+            <a href="#pastorais" class="group flex items-center gap-3 text-white uppercase tracking-widest text-xs font-bold px-4 py-4 hover:text-liturgy-primary transition-colors">
+              Ver Ministérios <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="bg-brand-dark border-t border-white/10 py-8 relative z-20 -mt-2">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-white/10">
+          <div class="px-6 py-2">
+            <p class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] mb-2">Missas Dominicais</p>
+            <p class="text-white font-display text-2xl tracking-wide">08h00 <span class="text-gray-500 mx-2">•</span> 19h00</p>
+          </div>
+          <div class="px-6 py-2 pt-6 md:pt-2">
+            <p class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] mb-2">Missas Semanais</p>
+            <p class="text-white font-display text-2xl tracking-wide">Qua 19h30 <span class="text-gray-500 mx-2">•</span> 1ª Sex 19h</p>
+          </div>
+          <div class="px-6 py-2 pt-6 md:pt-2">
+            <p class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] mb-2">Secretaria Paroquial</p>
+            <p class="text-white font-display text-2xl tracking-wide">Seg a Sex: 13h - 17h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="about" class="py-24 md:py-32 container mx-auto px-6">
+      <div class="grid lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-5 space-y-8">
+          <div class="flex items-center gap-3 text-liturgy-primary font-bold uppercase tracking-widest text-xs">
+            <i data-lucide="map-pin" class="w-4 h-4"></i> Nossa Casa
+          </div>
+          <h3 class="text-4xl md:text-5xl lg:text-6xl font-display uppercase leading-none">Uma família <br> unida pela <span class="text-liturgy-primary transition-liturgy">Eucaristia</span></h3>
+          <p class="text-gray-600 leading-loose text-lg">
+            Fundada com o suor e a fé dos primeiros moradores do bairro, a Capela São João Batista é um farol de esperança. Não somos apenas um prédio de tijolos, mas um corpo vivo que respira a Palavra de Deus.
+            <br><br>
+            Aqui, a tradição católica encontra a vivacidade de uma comunidade acolhedora, pronta para abraçar desde a criança na catequese até o enfermo que busca consolo.
+          </p>
+          <div class="flex gap-10 pt-4 border-t border-gray-200">
+            <div>
+              <div class="text-4xl font-display text-brand-dark">12+</div>
+              <div class="text-[10px] uppercase font-bold text-gray-500 tracking-widest mt-1">Pastorais Ativas</div>
+            </div>
+            <div>
+              <div class="text-4xl font-display text-brand-dark">1985</div>
+              <div class="text-[10px] uppercase font-bold text-gray-500 tracking-widest mt-1">Ano de Fundação</div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 relative">
+          <div class="absolute -inset-4 bg-liturgy-soft/50 rounded-[3rem] -z-10 transition-liturgy"></div>
+          <div class="grid grid-cols-2 gap-4">
+            <img src="https://www.aves.org.br/wp-content/uploads/2022/08/WhatsApp-Image-2022-08-14-at-17.42.36.jpeg" alt="Comunidade reunida" class="w-full h-64 md:h-96 object-cover rounded-3xl mt-12 shadow-lg">
+            <img src="https://viagensdefe.com.br/wp-content/uploads/2020/09/Capela-das-velas-SeturSP.jpg" alt="Altar" class="w-full h-64 md:h-96 object-cover rounded-3xl shadow-lg">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pastorais" class="py-24 md:py-32 bg-liturgy-soft/30 transition-liturgy relative">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div class="max-w-2xl">
+            <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs block mb-4">Ministérios</span>
+            <h2 class="font-display text-5xl md:text-6xl uppercase mb-4 text-brand-dark">Serviço e <span class="text-liturgy-primary transition-liturgy">Fé</span></h2>
+            <p class="text-gray-500 text-lg">A fé sem obras é morta. Conheça as frentes de trabalho da nossa comunidade e descubra onde Deus te chama a servir.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pastorais-grid">
+        </div>
+      </div>
+    </section>
+
+    <section id="dizimo" class="py-24 md:py-32 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="bg-brand-dark rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
+          <div class="lg:w-1/2 p-12 md:p-20 text-white flex flex-col justify-center relative overflow-hidden">
+            <i data-lucide="heart-handshake" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 opacity-20"></i>
+
+            <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs mb-4">Devolução a Deus</span>
+            <h2 class="font-display text-4xl md:text-5xl uppercase mb-6">Seja um <br> <span class="text-liturgy-primary transition-liturgy">Dizimista</span></h2>
+            <p class="text-gray-300 leading-relaxed mb-8">
+              O dízimo é um ato de gratidão, partilha e fé. É através da sua contribuição que mantemos nossa capela aberta, ajudamos os mais necessitados e sustentamos nossas ações evangelizadoras.
+            </p>
+            <ul class="space-y-4 mb-10">
+              <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check-circle-2" class="w-5 h-5 text-liturgy-primary"></i> Dimensão Religiosa (Sustento do templo)</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check-circle-2" class="w-5 h-5 text-liturgy-primary"></i> Dimensão Social (Ajuda aos pobres)</li>
+              <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check-circle-2" class="w-5 h-5 text-liturgy-primary"></i> Dimensão Missionária (Evangelização)</li>
+            </ul>
+          </div>
+          <div class="lg:w-1/2 bg-liturgy-soft/20 p-12 md:p-20 flex flex-col justify-center items-center text-center transition-liturgy border-l border-white/5">
+            <div class="bg-white p-8 rounded-3xl shadow-xl max-w-sm w-full">
+              <i data-lucide="qr-code" class="w-32 h-32 mx-auto text-brand-dark mb-6"></i>
+              <h4 class="font-display text-2xl uppercase text-brand-dark mb-2">Chave PIX</h4>
+              <p class="text-gray-500 text-sm mb-6 font-mono font-bold">CNPJ: 00.000.000/0001-00</p>
+              <button onclick="navigator.clipboard.writeText('00.000.000/0001-00'); alert('Chave PIX copiada!');" class="w-full py-3 bg-liturgy-primary text-white font-bold rounded-lg hover:bg-brand-dark transition-colors uppercase tracking-widest text-xs">
+                Copiar Chave
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="localizacao" class="py-24 md:py-32 bg-white relative overflow-hidden border-t border-gray-100">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col lg:flex-row gap-12 items-center">
+          <div class="lg:w-1/3">
+            <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs mb-4 block">Como Chegar</span>
+            <h2 class="font-display text-4xl md:text-5xl uppercase mb-6 text-brand-dark">Nossa <span class="text-liturgy-primary transition-liturgy">Localização</span></h2>
+            <p class="text-gray-500 mb-8 leading-relaxed">
+              Venha nos visitar e participar das nossas celebrações. Estamos de portas abertas para acolher você e sua família na nossa comunidade.
+            </p>
+            
+            <div class="flex items-start gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+              <div class="w-12 h-12 bg-liturgy-soft rounded-xl flex items-center justify-center text-liturgy-primary shrink-0 transition-liturgy shadow-sm">
+                <i data-lucide="map-pin"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-brand-dark uppercase tracking-widest text-xs mb-2">Endereço Principal</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  R. Doutor Procópio, 1210<br>
+                  Bairro Aracapé<br>
+                  Fortaleza - CE
+                </p>
+                <a href="https://maps.google.com/?q=Rua.+Doutor+Procópio,+1210+-+Aracapé" target="_blank" class="inline-block mt-4 text-xs font-bold uppercase tracking-widest text-liturgy-primary hover:text-brand-dark transition-colors">
+                  Abrir no Aplicativo &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="lg:w-2/3 w-full h-[450px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-gray-50 relative group">
+            <div class="absolute inset-0 bg-liturgy-primary/10 pointer-events-none group-hover:opacity-0 transition-opacity duration-500 z-10"></div>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d995.2301428119458!2d-38.58871243046617!3d-3.8272064616448387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c74df99def1e3f%3A0x1c4a7e254c14af47!2sIgreja%20de%20S%C3%A3o%20Jo%C3%A3o%20Batista%20-%20Aracap%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1776814924002!5m2!1spt-BR!2sbr" 
+              width="100%" 
+              height="100%" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              class="relative z-0 grayscale-[20%] contrast-125">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="inscricoes" class="py-24 md:py-32 bg-liturgy-soft/30 transition-liturgy relative">
+      <div class="container mx-auto px-6 max-w-5xl">
+        <div class="text-center mb-16">
+          <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs mb-4 block">Participe Ativamente</span>
+          <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-dark mb-4">Inscrições e <span class="text-liturgy-primary transition-liturgy">Formulários</span></h2>
+          <p class="text-gray-500 max-w-2xl mx-auto">
+            Utilize este espaço para se inscrever na Catequese, Encontros de Casais, retiros ou outros eventos pastorais da nossa paróquia.
+          </p>
+        </div>
+        
+        <div class="bg-white p-2 md:p-6 rounded-[2.5rem] shadow-2xl border border-white/50 flex justify-center">
+          <div class="w-full max-w-4xl overflow-hidden rounded-[1.5rem] bg-gray-50/50">
+            <iframe 
+              src="https://docs.google.com/forms/d/e/1FAIpQLSc_EXEMPLO/viewform?embedded=true" 
+              width="100%" 
+              height="700" 
+              frameborder="0" 
+              marginheight="0" 
+              marginwidth="0" 
+              class="w-full">
+              Carregando formulário...
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria" class="py-24 md:py-32 bg-brand-dark relative z-10 border-t border-white/5">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div class="max-w-2xl">
+            <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs block mb-4">Nossa História em Imagens</span>
+            <h2 class="font-display text-4xl md:text-5xl uppercase mb-4 text-white">Galeria de <span class="text-liturgy-primary transition-liturgy">Momentos</span></h2>
+            <p class="text-gray-400 text-lg">Um registro das nossas festividades, sacramentos e da vivência diária da nossa comunidade em Cristo.</p>
+          </div>
+          <a href="#" class="group flex items-center gap-3 text-white uppercase tracking-widest text-[10px] font-bold px-6 py-3 border border-white/20 rounded-full hover:bg-liturgy-primary hover:border-liturgy-primary transition-all duration-300">
+            Siga nosso Instagram <i data-lucide="instagram" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[250px]">
+          
+          <div class="group relative overflow-hidden rounded-3xl md:col-span-2 cursor-pointer shadow-lg bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80" alt="Santa Missa" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 md:p-8">
+              <div>
+                <span class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] block mb-1">Celebração</span>
+                <h4 class="text-white font-display text-xl uppercase tracking-wide">Santa Missa</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1544427500-4b2075b9f71c?auto=format&fit=crop&q=80" alt="Batismo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <div>
+                <span class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] block mb-1">Sacramento</span>
+                <h4 class="text-white font-display text-lg uppercase tracking-wide">Batizados</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-3xl row-span-2 cursor-pointer shadow-lg bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1519817914152-2a673b06166d?auto=format&fit=crop&q=80" alt="Altar" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 md:p-8">
+              <div>
+                <span class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] block mb-1">Adoração</span>
+                <h4 class="text-white font-display text-xl uppercase tracking-wide">Santíssimo</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1473280025148-643f9b0cbac2?auto=format&fit=crop&q=80" alt="Comunidade" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <div>
+                <span class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] block mb-1">Fraternidade</span>
+                <h4 class="text-white font-display text-lg uppercase tracking-wide">Eventos</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative overflow-hidden rounded-3xl md:col-span-2 cursor-pointer shadow-lg bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1514050566906-8d077bae7046?auto=format&fit=crop&q=80" alt="Festa Padroeiro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 md:p-8">
+              <div>
+                <span class="text-liturgy-primary font-bold uppercase tracking-widest text-[10px] block mb-1">Tradição</span>
+                <h4 class="text-white font-display text-xl uppercase tracking-wide">Festa do Padroeiro</h4>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+
+    <section id="faq" class="py-24 md:py-32 bg-brand-light">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <div class="text-center mb-16">
+          <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-dark mb-4">Dúvidas Frequentes</h2>
+          <p class="text-gray-500">Tudo o que você precisa saber sobre sacramentos e funcionamento da capela.</p>
+        </div>
+
+        <div class="space-y-4" id="faq-container">
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 md:py-32 bg-brand-dark text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M54.627 0l.83.83-54.627 54.627-.83-.83L54.627 0zM30.627 0l.83.83-30.627 30.627-.83-.83L30.627 0zM0 24.627l.83.83L0 25.457v-.83zm59.17-24.627l.83.83L35.373 60l-.83-.83L59.17 0z\' fill=\'%23ffffff\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+      <div class="container mx-auto px-6 relative z-10">
+        <div class="grid md:grid-cols-2 gap-16">
+          <div>
+            <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs mb-4 block">Fale Conosco</span>
+            <h2 class="font-display text-5xl md:text-6xl mb-6 uppercase">Estamos <br> aqui para <span class="text-liturgy-primary transition-liturgy">ajudar</span></h2>
+            <p class="text-gray-400 mb-10 text-lg">Deseja marcar uma intenção de missa, agendar um batismo ou pedir uma visita aos enfermos? Envie-nos uma mensagem.</p>
+
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                <div class="w-12 h-12 bg-liturgy-primary/20 flex items-center justify-center rounded-xl text-liturgy-primary transition-liturgy">
+                  <i data-lucide="phone"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-widest">Secretaria</p>
+                  <p class="font-bold text-lg">(11) 99999-9999</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                <div class="w-12 h-12 bg-liturgy-primary/20 flex items-center justify-center rounded-xl text-liturgy-primary transition-liturgy">
+                  <i data-lucide="map-pin"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-widest">Endereço</p>
+                  <p class="font-bold text-lg">Rua da Capela, 123 - Centro</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! Deus abençoe.');">
+            <div class="grid gap-6">
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Nome Completo</label>
+                <input type="text" required="" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-brand-dark outline-none focus:border-liturgy-primary focus:ring-1 focus:ring-liturgy-primary transition-all">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Celular / WhatsApp</label>
+                <input type="tel" required="" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-brand-dark outline-none focus:border-liturgy-primary focus:ring-1 focus:ring-liturgy-primary transition-all">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Assunto</label>
+                <select class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-brand-dark outline-none focus:border-liturgy-primary transition-all">
+                  <option>Intenção de Missa</option>
+                  <option>Informações sobre Sacramentos</option>
+                  <option>Dízimo</option>
+                  <option>Outros</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Mensagem</label>
+                <textarea rows="4" required="" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-brand-dark outline-none focus:border-liturgy-primary focus:ring-1 focus:ring-liturgy-primary transition-all"></textarea>
+              </div>
+              <button type="submit" class="w-full py-4 bg-liturgy-primary text-white font-bold rounded-xl hover:bg-brand-dark transition-all uppercase tracking-widest mt-2 shadow-lg hover:shadow-xl">
+                Enviar Mensagem
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-brand-dark text-white pt-20 pb-10 border-t border-white/5">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+          <div class="md:col-span-2">
+            <span class="font-display text-3xl tracking-tighter uppercase mb-6 block">São João Batista</span>
+            <p class="text-gray-400 max-w-sm leading-relaxed mb-8">Preparando os caminhos do Senhor através da Eucaristia, da caridade e da vivência comunitária fraterna.</p>
+            <div class="flex gap-4">
+              <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-liturgy-primary transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+              <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-liturgy-primary transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+              <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-liturgy-primary transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-bold uppercase tracking-widest text-xs text-gray-500 mb-6">Links Rápidos</h4>
+            <ul class="space-y-4 text-gray-300 text-sm">
+              <li><a href="#home" class="hover:text-liturgy-primary transition-colors">Início</a></li>
+              <li><a href="#about" class="hover:text-liturgy-primary transition-colors">História</a></li>
+              <li><a href="#pastorais" class="hover:text-liturgy-primary transition-colors">Pastorais</a></li>
+              <li><a href="#dizimo" class="hover:text-liturgy-primary transition-colors">Dízimo</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-bold uppercase tracking-widest text-xs text-gray-500 mb-6">Sacramentos</h4>
+            <ul class="space-y-4 text-gray-300 text-sm">
+              <li>Batismo</li>
+              <li>1ª Eucaristia (Catequese)</li>
+              <li>Crisma</li>
+              <li>Matrimônio</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+          <p>© <span id="current-year"></span> Comunidade São João Batista. Todos os direitos reservados.</p>
+          <p>Desenvolvido com Fé e Tecnologia.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Set current year in footer
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+
+      // --- MOBILE MENU LOGIC ---
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      function toggleMenu() {
+        const isClosed = mobileMenu.classList.contains('opacity-0');
+        if (isClosed) {
+          mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+          document.body.style.overflow = 'hidden'; // Evitar scroll
+        } else {
+          mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+          document.body.style.overflow = '';
+        }
+      }
+
+      menuBtn.addEventListener('click', toggleMenu);
+      closeMenuBtn.addEventListener('click', toggleMenu);
+      mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+      // --- NAVBAR SCROLL EFFECT ---
+      window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        if (window.scrollY > 50) {
+          header.classList.add('py-2', 'shadow-md');
+          header.classList.remove('py-4');
+        } else {
+          header.classList.remove('py-2', 'shadow-md');
+          header.classList.add('py-4');
+        }
+      });
+
+      // --- LÓGICA DO TEMPO LITÚRGICO ---
+      const getLiturgicalSeason = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const day = now.getDate();
+
+        // Cálculo da Páscoa
+        const a = year % 19;
+        const b = Math.floor(year / 100);
+        const c = year % 100;
+        const d = Math.floor(b / 4);
+        const e = b % 4;
+        const f = Math.floor((b + 8) / 25);
+        const g = Math.floor((b - f + 1) / 3);
+        const h = (19 * a + b - d - g + 15) % 30;
+        const i = Math.floor(c / 4);
+        const k = c % 4;
+        const l = (32 + 2 * e + 2 * i - h - k) % 7;
+        const m = Math.floor((a + 11 * h + 22 * l) / 451);
+        const easterMonth = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+        const easterDay = ((h + l - 7 * m + 114) % 31) + 1;
+        const easterDate = new Date(year, easterMonth, easterDay);
+
+        // Datas Relativas
+        const quaresmaStart = new Date(easterDate);
+        quaresmaStart.setDate(easterDate.getDate() - 46);
+
+        const pentecostesDate = new Date(easterDate);
+        pentecostesDate.setDate(easterDate.getDate() + 50);
+
+        // Advento (4 domingos antes do Natal)
+        const natal = new Date(year, 11, 25);
+        const adventoStart = new Date(year, 11, 25);
+        adventoStart.setDate(25 - (adventoStart.getDay() || 7) - 21);
+
+        // Definição de Cores
+        if (now >= quaresmaStart && now < easterDate) {
+          return {
+            name: "Tempo da Quaresma",
+            color: "#6B21A8",
+            soft: "#F3E8FF",
+            icon: "cloud-rain"
+          }; // Roxo Profundo
+        } else if (now >= easterDate && now < pentecostesDate) {
+          return {
+            name: "Tempo Pascal",
+            color: "#B68D40",
+            soft: "#FEFCE8",
+            icon: "sun"
+          }; // Dourado
+        } else if (now >= adventoStart && now < natal) {
+          return {
+            name: "Tempo do Advento",
+            color: "#6B21A8",
+            soft: "#F3E8FF",
+            icon: "star"
+          }; // Roxo
+        } else if (month === 11 && day >= 25 || (month === 0 && day <= 10)) {
+          return {
+            name: "Tempo do Natal",
+            color: "#B68D40",
+            soft: "#FEFCE8",
+            icon: "baby"
+          }; // Dourado
+        } else if (now.toDateString() === pentecostesDate.toDateString()) {
+          return {
+            name: "Pentecostes",
+            color: "#DC2626",
+            soft: "#FEF2F2",
+            icon: "flame"
+          }; // Vermelho
+        }
+
+        // Padrão
+        return {
+          name: "Tempo Comum",
+          color: "#15803D",
+          soft: "#F0FDF4",
+          icon: "leaf"
+        }; // Verde
+      };
+
+      const updateLiturgyUI = () => {
+        const season = getLiturgicalSeason();
+        document.documentElement.style.setProperty('--liturgy-main', season.color);
+        document.documentElement.style.setProperty('--liturgy-soft', season.soft);
+
+        document.getElementById('liturgy-bar').innerHTML = `<span class="opacity-80">Você está navegando no</span> <br class="md:hidden"> ${season.name}`;
+        document.getElementById('liturgy-season-name').innerText = season.name;
+      };
+
+      // --- CONTEÚDO DINÂMICO (PASTORAIS) ---
+      const pastorais = [{
+          title: "Família",
+          desc: "Acolhimento de casais e fortalecimento dos laços domésticos, preparando para a vivência matrimonial.",
+          icon: "users"
+        },
+        {
+          title: "Batismo",
+          desc: "Preparação de pais e padrinhos para a inserção das crianças na vida cristã.",
+          icon: "droplets"
+        },
+        {
+          title: "Catequese",
+          desc: "Formação de novos discípulos de todas as idades para a 1ª Eucaristia e Crisma.",
+          icon: "book-open"
+        },
+        {
+          title: "Música",
+          desc: "Animação litúrgica e louvor através do canto, elevando as almas durante as missas.",
+          icon: "music"
+        },
+        {
+          title: "Liturgia",
+          desc: "Zelo e organização para que as celebrações ocorram de forma bela e sagrada.",
+          icon: "flame"
+        },
+        {
+          title: "MECE",
+          desc: "Ministros extraordinários que levam a Eucaristia aos enfermos e auxiliam no altar.",
+          icon: "heart"
+        },
+        {
+          title: "Terço dos Homens",
+          desc: "Reunião semanal de homens fortalecidos pela oração mariana e pela fraternidade.",
+          icon: "gem"
+        },
+        {
+          title: "PASCOM",
+          desc: "Comunicação a serviço da evangelização digital, fotos e avisos da comunidade.",
+          icon: "share-2"
+        },
+        {
+          title: "Dízimo",
+          desc: "Conscientização sobre a importância da partilha para a manutenção do templo.",
+          icon: "coins"
+        }
+      ];
+
+      const renderPastorais = () => {
+        const container = document.getElementById('pastorais-grid');
+        pastorais.forEach(p => {
+          container.innerHTML += `
+                    <div class="bento-card group border-2 border-transparent hover:border-liturgy-primary/20 cursor-pointer">
+                        <div class="w-14 h-14 bg-liturgy-soft text-liturgy-primary rounded-2xl flex items-center justify-center mb-6 transition-liturgy group-hover:bg-liturgy-primary group-hover:text-white group-hover:rotate-6">
+                            <i data-lucide="${p.icon}" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-display text-2xl uppercase mb-3 text-brand-dark group-hover:text-liturgy-primary transition-colors">${p.title}</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">${p.desc}</p>
+                    </div>
+                `;
+        });
+      };
+
+      // --- CONTEÚDO DINÂMICO (FAQ) ---
+      const faqData = [{
+          q: "Quais os horários de missa?",
+          a: "Nossas celebrações acontecem aos Domingos às 08h00 e 19h00. Temos também missas às Quartas-feiras às 19h30 e na primeira Sexta-feira do mês às 19h00."
+        },
+        {
+          q: "Como solicitar uma intenção de missa?",
+          a: "As intenções podem ser marcadas presencialmente na secretaria paroquial ou na sacristia, chegando com 15 a 20 minutos de antecedência do início da missa."
+        },
+        {
+          q: "O que preciso para marcar um Batizado?",
+          a: "É necessário que os pais e padrinhos tenham feito o Curso de Batismo. Os padrinhos devem ser católicos crismados. Procure a secretaria para agendamento com os documentos (RG e Certidão de Casamento/Crisma)."
+        },
+        {
+          q: "Como funcionam as inscrições para a Catequese?",
+          a: "As turmas abrem anualmente entre os meses de Fevereiro e Março. Avisamos os períodos exatos durante as missas e em nossas redes sociais."
+        },
+        {
+          q: "Como posso começar a ser Dizimista?",
+          a: "Você pode procurar a equipe do dízimo ao final de qualquer celebração aos domingos, ou fazer sua contribuição diretamente pela chave PIX oficial da capela informada neste site."
+        }
+      ];
+
+      const renderFAQ = () => {
+        const container = document.getElementById('faq-container');
+        faqData.forEach((f, i) => {
+          container.innerHTML += `
+                    <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <button class="w-full text-left p-6 flex justify-between items-center group bg-white focus:outline-none" onclick="toggleFaq(${i})">
+                            <span class="text-lg font-bold text-brand-dark group-hover:text-liturgy-primary transition-colors">${f.q}</span>
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-liturgy-soft text-gray-400 group-hover:text-liturgy-primary transition-colors">
+                                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" id="icon-${i}"></i>
+                            </div>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out" id="ans-${i}">
+                            <div class="p-6 pt-0 text-gray-500 leading-relaxed border-t border-gray-50">
+                                ${f.a}
+                            </div>
+                        </div>
+                    </div>
+                `;
+        });
+      };
+
+      // Função global para o FAQ
+      window.toggleFaq = function(index) {
+        const ans = document.getElementById(`ans-${index}`);
+        const icon = document.getElementById(`icon-${index}`);
+
+        if (ans.style.maxHeight) {
+          ans.style.maxHeight = null;
+          icon.classList.remove('rotate-180');
+        } else {
+          // Fechar todos os outros
+          document.querySelectorAll('[id^="ans-"]').forEach(el => el.style.maxHeight = null);
+          document.querySelectorAll('[id^="icon-"]').forEach(el => el.classList.remove('rotate-180'));
+
+          // Abrir o clicado
+          ans.style.maxHeight = ans.scrollHeight + "px";
+          icon.classList.add('rotate-180');
+        }
+      };
+
+      // Inicialização
+      document.addEventListener('DOMContentLoaded', () => {
+        updateLiturgyUI();
+        renderPastorais();
+        renderFAQ();
+        lucide.createIcons();
+
+        // Checagem diária do tempo litúrgico caso a aba fique aberta
+        setInterval(updateLiturgyUI, 1000 * 60 * 60);
+      });
+    </script>
 
   </body>
 
