@@ -1,0 +1,231 @@
+:root {
+  /* Cor padrão até o JS calcular o tempo litúrgico atual */
+  --liturgy-main: #2D5A27;
+  --liturgy-soft: #E9F2E8;
+}
+
+.glass-nav {
+  background: rgba(252, 250, 247, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.hero-mask {
+  background: linear-gradient(to bottom, rgba(15, 20, 30, 0.6), rgba(15, 20, 30, 0.9));
+}
+
+.transition-liturgy {
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease;
+}
+
+/*
+ * BUG CORRIGIDO: esta classe usava `@apply` dentro de uma tag <style>
+ * comum. O Tailwind via CDN (cdn.tailwindcss.com) só processa @apply
+ * dentro de <style type="text/tailwindcss">; em uma tag normal, o
+ * navegador ignora a regra inteira e o cartão fica sem nenhum estilo.
+ * Reescrita aqui como CSS puro para funcionar sempre, em qualquer
+ * navegador, sem depender do motor do Tailwind em tempo real.
+ */
+.bento-card {
+  background-color: #ffffff;
+  border: 1px solid #f3f4f6;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  transition: box-shadow 0.5s ease, transform 0.5s ease, border-color 0.5s ease;
+}
+
+.bento-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-0.5rem);
+}
+
+/* Ocultar barra de rolagem no menu mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Respeita usuários que preferem menos animação (acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Foco visível no teclado (acessibilidade) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--liturgy-main);
+  outline-offset: 2px;
+}
+
+/* =========================================================================
+   CAMADA DE DESIGN PREMIUM
+   ========================================================================= */
+
+/* Scrollbar customizada (navegadores baseados em WebKit/Blink) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #fcfaf7;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--liturgy-main);
+  border-radius: 999px;
+  border: 2px solid #fcfaf7;
+}
+html {
+  scrollbar-color: var(--liturgy-main) #fcfaf7;
+  scrollbar-width: thin;
+}
+
+/* Barra de progresso de leitura, fixa no topo */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--liturgy-main), var(--liturgy-main) 60%, #ffffff);
+  z-index: 60;
+  transition: width 0.1s linear;
+}
+
+/* Botão flutuante "voltar ao topo" */
+#back-to-top {
+  transition: opacity 0.4s ease, transform 0.3s ease;
+}
+#back-to-top:hover {
+  transform: translateY(-4px);
+}
+
+/* Animação de entrada ao rolar a página */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Textura sutil de grão sobre o hero — dá profundidade sem precisar de
+   nenhuma imagem externa (gerada via filtro SVG embutido em CSS). */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Brilho interativo que segue o cursor no hero (desktop apenas) */
+#home {
+  --glow-x: 50%;
+  --glow-y: 40%;
+}
+#home .cursor-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(600px circle at var(--glow-x) var(--glow-y), rgba(var(--liturgy-main-rgb, 45, 90, 39), 0.18), transparent 60%);
+  transition: background 0.1s ease-out;
+  mix-blend-mode: screen;
+}
+
+/* Letra capitular editorial no parágrafo "Sobre" */
+.drop-cap::first-letter {
+  font-family: 'Anton SC', sans-serif;
+  float: left;
+  font-size: 4.5rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.4rem;
+  color: var(--liturgy-main);
+}
+
+/* Rótulo editorial "número da seção" (01, 02, 03...) */
+.eyebrow-number {
+  font-family: 'Anton SC', sans-serif;
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+  font-size: 3.5rem;
+  line-height: 1;
+  opacity: 0.15;
+}
+
+/* Faixa de versículos em marquee infinito */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Cartões de conteúdo do dia (Palavra Viva) */
+.faith-card {
+  background: #ffffff;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 20px 40px -20px rgba(15, 20, 30, 0.15);
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg, #eee 25%, #f6f6f6 37%, #eee 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: 999px;
+}
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* Linha decorativa divisória entre seções, com losango central */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--liturgy-main);
+  opacity: 0.4;
+}
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: currentColor;
+}

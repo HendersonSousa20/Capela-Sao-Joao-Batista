@@ -1,0 +1,5 @@
+Coloque aqui as fotos da galeria do site.
+
+Depois de salvar o arquivo nesta pasta, adicione uma linha correspondente
+no array "galeria" dentro de js/config.js. Veja o passo a passo completo
+no README.md, na raiz do projeto.
