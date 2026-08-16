@@ -1,7 +1,10 @@
 # Site da Capela São João Batista (Aracapé — Fortaleza/CE)
 
 Site institucional em HTML/CSS/JS puro — **não precisa de programa nenhum
-instalado, servidor ou build**. É só abrir/hospedar os arquivos.
+instalado, servidor, build ou API externa**. É só abrir/hospedar os
+arquivos. Tudo que o site calcula (cor litúrgica, horários, Santo do Dia,
+Catecismo do Dia) roda direto no navegador da pessoa, sem depender de
+nenhum serviço de terceiros — por isso nunca fica fora do ar.
 
 ## Estrutura
 
@@ -10,14 +13,15 @@ index.html          → a página em si (estrutura e textos fixos)
 css/style.css        → estilos personalizados e camada de design premium
 js/config.js          ⭐ TODOS os dados que mudam ficam aqui (telefone,
                           endereço, horários de missa, Pix, redes sociais,
-                          lista de pastorais, perguntas do FAQ, catecismo)
-js/liturgy.js        → cálculo automático do tempo litúrgico, próxima
-                          missa, "aberto agora" e contagem para a festa
-js/catholic-api.js    → busca o Evangelho e o Santo do Dia numa API
-                          católica pública, com cache diário
+                          pastorais, FAQ, catecismo, calendário de santos)
+js/liturgy.js        → cálculo automático do tempo litúrgico, Ano/Ciclo
+                          litúrgico (A/B/C + I/II), semana do Tempo Comum,
+                          solenidades especiais, mistério do Terço do dia,
+                          próxima missa, "aberto agora" e contagem da festa
 js/content.js        → desenha na página os dados de config.js
-js/dailyfaith.js      → desenha a seção "Palavra Viva" (Evangelho, Santo
-                          e Catecismo do Dia)
+js/dailyfaith.js      → desenha a seção "Palavra Viva" (Liturgia de Hoje,
+                          Santo do Dia, Terço do Dia, Oração Mariana do
+                          Tempo e Catecismo do Dia) — 100% local
 js/gallery.js        → desenha a galeria de fotos
 js/contact.js        → botão "Enviar Mensagem" → WhatsApp
 js/ui.js              → menu mobile, rolagem do topo, abrir/fechar FAQ
@@ -30,9 +34,14 @@ img/galeria/          → pasta para colocar fotos da galeria (veja abaixo)
 
 ## O que já funciona sozinho (automações), sem precisar mexer no site
 
+Tudo abaixo roda **100% no navegador, sem internet e sem API nenhuma** —
+foi escolhido de propósito assim, para nunca depender de um serviço de
+terceiros que pode sair do ar ou bloquear o acesso (como aconteceu na
+primeira versão, que usava uma API externa e caía por bloqueio de CORS).
+
 - **Cor do site muda sozinha** conforme o tempo litúrgico (Advento, Quaresma,
   Páscoa, Natal, Pentecostes, Tempo Comum) — recalculado pela data de hoje,
-  todo ano, para sempre.
+  usando um algoritmo matemático (cálculo da Páscoa). Nunca falha.
 - **"Próxima celebração" e "aberto agora"**, no topo da página, calculados a
   partir dos horários cadastrados em `config.js`.
 - **Contagem regressiva para a Festa de São João Batista** (24 de junho),
@@ -41,14 +50,38 @@ img/galeria/          → pasta para colocar fotos da galeria (veja abaixo)
 - **Número de "Pastorais Ativas"** e de **"Celebrações por Semana"** contam
   sozinhos a partir de `config.js` — se adicionar/remover algo, o número
   muda junto, sem risco de ficar errado.
-- **Evangelho e Santo do Dia** são buscados automaticamente todos os dias
-  numa API católica pública e gratuita. Se ela ficar fora do ar, a seção
-  mostra um aviso elegante com um link alternativo — nunca quebra a página.
-- **Cor litúrgica oficial do dia** também vem dessa API (mais precisa que
-  o cálculo local, pois conhece festas e memórias de santos específicas),
-  com o cálculo local sempre como reserva se a API falhar.
-- **Catecismo do Dia** roda 100% localmente (sem depender de internet),
-  girando por uma lista de reflexões em `config.js`.
+- **Liturgia de Hoje**: mostra a data de hoje, o tempo litúrgico atual, o
+  **Ano/Ciclo litúrgico** (Ano A/B/C das leituras dominicais + Ciclo I/II
+  das leituras de semana) e, quando aplicável, a **semana do Tempo Comum**
+  (ex.: "20ª Semana do Tempo Comum") — tudo por cálculo local, sem API.
+  Também tem um link direto para o site oficial da CNBB, para quem quiser
+  ler as leituras completas do dia.
+- **Faixa de solenidade especial**: quando o dia coincide com uma festa
+  maior (Cinzas, Ramos, Tríduo Pascal, Ascensão, Pentecostes, Trindade,
+  Corpo de Cristo, Sagrado Coração, Cristo Rei, Todos os Santos, Finados,
+  Imaculada Conceição, Natal, etc.), aparece um destaque no topo da seção
+  — todas essas datas são calculadas a partir da Páscoa ou de datas fixas,
+  ano após ano, sem manutenção.
+- **Santo do Dia**: consulta um calendário de datas fixas dos santos mais
+  conhecidos da Igreja (Calendário Romano Geral), cadastrado em
+  `config.js → santoral`. Nos dias sem uma entrada cadastrada, mostra uma
+  mensagem genérica e convida a conferir o calendário completo no link
+  oficial — nunca mostra uma informação inventada.
+- **Terço do Dia**: mostra o conjunto de mistérios (Gozosos, Dolorosos,
+  Luminosos ou Gloriosos) que a tradição da Igreja indica para cada dia da
+  semana — aos domingos, o conjunto também respeita o tempo litúrgico
+  (Gozosos no Advento/Natal, Dolorosos na Quaresma, Gloriosos no resto do
+  ano). Lista completa em `config.js → rosario`.
+- **Oração Mariana do Tempo**: exibe o Angelus na maior parte do ano e o
+  Regina Coeli automaticamente durante todo o Tempo Pascal, como manda a
+  tradição litúrgica. Textos em `config.js → oracoesMarianas`.
+- **Catecismo do Dia** gira por uma lista de reflexões próprias (não é
+  cópia do Catecismo oficial) em `config.js → catecismo`, uma por dia,
+  reiniciando quando a lista acaba.
+- **Compartilhar a Palavra de hoje**: botão que monta um resumo do dia
+  (tempo litúrgico, ano/ciclo e mistério do Terço) e abre o WhatsApp para
+  a pessoa enviar a quem quiser — sem número fixo, é um compartilhamento
+  genérico.
 
 ## Tarefas comuns (o que editar em `js/config.js`)
 
@@ -69,6 +102,8 @@ valores entre aspas — não precisa entender programação para isso.
   `pastorais`, com `titulo`, `desc` e um `icone` (nomes de ícones em
   https://lucide.dev/icons).
 - **Adicionar/editar uma pergunta do FAQ:** adicione um item em `faq`.
+- **Adicionar um santo ao calendário:** adicione um item em `santoral`,
+  com `mes` (1-12), `dia`, `nome` e `resumo`.
 
 ## Como publicar fotos na galeria
 
@@ -94,11 +129,12 @@ São João Batista - Aracapé") e no Instagram
 Fortaleza - CE. Vale confirmar periodicamente com a secretaria/pastoral se
 os horários continuam os mesmos, já que celebrações podem mudar.
 
-O Evangelho e o Santo do Dia vêm da API pública
-[api-liturgia-diaria.vercel.app](https://api-liturgia-diaria.vercel.app/)
-(fontes: sagradaliturgia.com.br e Canção Nova). É um projeto independente
-e gratuito — se um dia sair do ar definitivamente, basta trocar a URL em
-`apiCatolica` dentro de `js/config.js` por outra API equivalente.
+O calendário de santos (`santoral`) segue o Calendário Romano Geral da
+Igreja Católica — cobre as datas fixas mais conhecidas (cerca de 85 dias
+do ano); memórias facultativas e datas que variam por região ficaram de
+fora de propósito, para não arriscar exibir uma informação errada. O
+Catecismo do Dia é uma elaboração própria inspirada nos grandes temas do
+CIC, não uma cópia do texto oficial.
 
 ## Publicando o site
 

@@ -12,54 +12,25 @@ document.addEventListener("DOMContentLoaded", function () {
     return m ? (parseInt(m[1], 16) + ", " + parseInt(m[2], 16) + ", " + parseInt(m[3], 16)) : "45, 90, 39";
   }
 
-  function applyLiturgyColor(color, soft) {
-    document.documentElement.style.setProperty("--liturgy-main", color);
-    document.documentElement.style.setProperty("--liturgy-soft", soft);
-    document.documentElement.style.setProperty("--liturgy-main-rgb", hexToRgb(color));
-  }
-
-  // Cálculo local (instantâneo, sempre correto para o tempo litúrgico
-  // "geral" do calendário). Aplicado primeiro para não haver flash sem
-  // cor enquanto a API (mais precisa, considera festas específicas)
-  // ainda está carregando.
-  function updateLiturgyUILocal() {
+  // A cor litúrgica do site vem SEMPRE do algoritmo local (cálculo da
+  // Páscoa em js/liturgy.js) — é 100% matemático, não depende de internet
+  // nem de nenhuma API, e por isso nunca falha. De propósito, nenhuma
+  // API externa participa dessa decisão.
+  function updateLiturgyUI() {
     const season = CapelaLiturgy.getLiturgicalSeason();
-    applyLiturgyColor(season.color, season.soft);
+
+    document.documentElement.style.setProperty("--liturgy-main", season.color);
+    document.documentElement.style.setProperty("--liturgy-soft", season.soft);
+    document.documentElement.style.setProperty("--liturgy-main-rgb", hexToRgb(season.color));
 
     const bar = document.getElementById("liturgy-bar");
     if (bar) bar.innerHTML = '<span class="opacity-80">Você está navegando no</span> <br class="md:hidden"> ' + season.name;
 
     const seasonName = document.getElementById("liturgy-season-name");
     if (seasonName) seasonName.innerText = season.name;
-
-    return season;
   }
 
-  // Refinamento com a cor litúrgica OFICIAL do dia, vinda da API católica
-  // (considera festas e memórias de santos que o cálculo local não sabe).
-  // Se a API falhar, o site simplesmente mantém o cálculo local — nunca
-  // fica sem cor ou quebrado.
-  function refineLiturgyUIFromAPI() {
-    if (!window.CapelaCatholicAPI) return;
-    CapelaCatholicAPI.getLiturgiaHoje().then(function (data) {
-      const corInfo = data && data.today && CapelaCatholicAPI.corLiturgicaParaTema(data.today.color);
-      if (!corInfo) return;
-      applyLiturgyColor(corInfo.hex, corInfo.soft);
-
-      const seasonName = document.getElementById("liturgy-season-name");
-      const bar = document.getElementById("liturgy-bar");
-      const titulo = data.today.entry_title;
-      if (titulo) {
-        if (seasonName) seasonName.innerText = titulo;
-        if (bar) bar.innerHTML = '<span class="opacity-80">Hoje a liturgia celebra:</span> <br class="md:hidden"> ' + titulo;
-      }
-    }).catch(function () {
-      // Silenciosamente mantém o cálculo local — sem erro visível ao usuário.
-    });
-  }
-
-  updateLiturgyUILocal();
-  refineLiturgyUIFromAPI();
+  updateLiturgyUI();
 
   CapelaContent.renderPastorais();
   CapelaContent.renderFAQ();
@@ -71,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
   CapelaContact.init();
   CapelaUI.init();
 
+  // Conteúdo do dia (Evangelho, Santo, Catecismo): vem de módulos com
+  // fallback próprio (ver catholic-api.js) — nunca trava o resto da página
+  // mesmo se a API estiver fora do ar.
   if (window.CapelaDailyFaith) CapelaDailyFaith.init();
 
   if (window.lucide) lucide.createIcons();
@@ -81,7 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Tempo litúrgico e status "aberto agora" são recalculados periodicamente
   // caso a aba fique aberta por muito tempo — sem precisar recarregar.
-  setInterval(updateLiturgyUILocal, 1000 * 60 * 60); // a cada hora
+  setInterval(function () {
+    updateLiturgyUI();
+    // Recalcula Palavra Viva também, para o caso raro de a aba ficar
+    // aberta atravessando a meia-noite (troca de dia, santo, mistério...).
+    if (window.CapelaDailyFaith) CapelaDailyFaith.refresh();
+    if (window.lucide) lucide.createIcons();
+  }, 1000 * 60 * 60); // a cada hora
   setInterval(function () {
     CapelaContent.renderStatusFaixa();
     CapelaContent.renderContagemFesta();

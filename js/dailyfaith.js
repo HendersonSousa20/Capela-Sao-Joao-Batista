@@ -1,102 +1,239 @@
 /**
  * dailyfaith.js
  * -----------------------------------------------------------------------
- * Preenche a seção "Palavra Viva" (Evangelho, Santo e Catecismo do Dia).
+ * Preenche a seção "Palavra Viva": Liturgia de Hoje (com Ano/Ciclo
+ * litúrgico, semana do Tempo Comum e solenidades especiais), Santo do
+ * Dia, Terço do Dia, Oração Mariana do Tempo e Catecismo do Dia.
  *
- * Cuidado de segurança: todo texto que vem da API externa é inserido via
- * textContent (nunca innerHTML), então mesmo que a API de terceiros um
- * dia devolva algo inesperado, não há risco de injeção de HTML/script no
- * site.
+ * Arquitetura: cada bloco tem uma função "renderX" independente — se um
+ * dado faltar (ex.: dia sem santo cadastrado), só aquele cartão cai no
+ * seu próprio estado de fallback, sem quebrar os demais. TUDO é
+ * calculado localmente (datas, Páscoa, ciclos, mistério do dia); não há
+ * nenhuma chamada de rede nesta seção, então ela nunca fica em estado de
+ * erro, nunca demora para carregar e funciona até sem internet.
  * -----------------------------------------------------------------------
  */
 window.CapelaDailyFaith = (function () {
+  const cfg = window.CapelaConfig;
+
+  const MESES = [
+    "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+    "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+  ];
+  const DIAS_SEMANA = [
+    "domingo", "segunda-feira", "terça-feira", "quarta-feira",
+    "quinta-feira", "sexta-feira", "sábado"
+  ];
+  const ORDINAIS = [
+    "1ª", "2ª", "3ª", "4ª", "5ª", "6ª", "7ª", "8ª", "9ª", "10ª",
+    "11ª", "12ª", "13ª", "14ª", "15ª", "16ª", "17ª", "18ª", "19ª", "20ª",
+    "21ª", "22ª", "23ª", "24ª", "25ª", "26ª", "27ª", "28ª", "29ª", "30ª",
+    "31ª", "32ª", "33ª", "34ª"
+  ];
 
   function setText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
   }
 
-  function showState(prefix, state) {
-    // state: 'loading' | 'ready' | 'error'
-    ["loading", "ready", "error"].forEach(function (s) {
-      const el = document.getElementById(prefix + "-" + s);
-      if (el) el.classList.toggle("hidden", s !== state);
-    });
+  function setHTML(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
   }
 
-  function renderEvangelho() {
-    showState("evangelho", "loading");
-    CapelaCatholicAPI.getLiturgiaHoje().then(function (data) {
-      const t = data && data.today;
-      const gospel = t && t.readings && t.readings.gospel;
-      if (!t || !gospel) throw new Error("Formato inesperado");
-
-      setText("evangelho-referencia", (gospel.head_title || "Evangelho do Dia").replace("Evangelho de Jesus Cristo segundo ", ""));
-      setText("evangelho-titulo-liturgico", t.entry_title || "");
-      setText("evangelho-texto", gospel.text || "");
-
-      const dataEl = document.getElementById("evangelho-data");
-      if (dataEl) dataEl.textContent = t.date || "";
-
-      showState("evangelho", "ready");
-    }).catch(function () {
-      showState("evangelho", "error");
-    });
+  function show(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
   }
 
-  function renderSanto() {
-    showState("santo", "loading");
-    CapelaCatholicAPI.getSantoHoje().then(function (data) {
-      const t = data && data.today;
-      if (!t || !t.title) throw new Error("Formato inesperado");
-
-      setText("santo-nome", t.title);
-
-      // full_text costuma ser longo — mostramos só o primeiro parágrafo
-      // como resumo, com opção de expandir.
-      const paragrafos = (t.full_text || "").split(/\n+/).map(function (p) { return p.trim(); }).filter(Boolean);
-      const resumo = paragrafos.slice(0, 2).join(" ");
-      const completo = paragrafos.join("\n\n");
-
-      setText("santo-resumo", resumo || "Sem biografia disponível para hoje.");
-
-      const completoEl = document.getElementById("santo-completo");
-      if (completoEl) completoEl.textContent = completo;
-
-      const btn = document.getElementById("santo-expandir-btn");
-      const wrapCompleto = document.getElementById("santo-completo-wrap");
-      if (btn && wrapCompleto && paragrafos.length > 2) {
-        btn.classList.remove("hidden");
-        btn.addEventListener("click", function () {
-          const aberto = !wrapCompleto.classList.contains("hidden");
-          wrapCompleto.classList.toggle("hidden", aberto);
-          btn.textContent = aberto ? "Ler biografia completa" : "Recolher";
-        });
-      }
-
-      showState("santo", "ready");
-    }).catch(function () {
-      showState("santo", "error");
-    });
+  function hide(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
   }
 
-  function renderCatecismo() {
-    const item = CapelaCatholicAPI.getCatecismoHoje();
-    if (!item) {
-      showState("catecismo", "error");
-      return;
+  function formatarDataHoje() {
+    const d = new Date();
+    return DIAS_SEMANA[d.getDay()] + ", " + d.getDate() + " de " + MESES[d.getMonth()] + " de " + d.getFullYear();
+  }
+
+  // ---------------------------------------------------------------------
+  // Faixa de destaque: solenidades e festas especiais calculadas a partir
+  // da Páscoa e de datas fixas (ver CapelaLiturgy.getSpecialDay).
+  // ---------------------------------------------------------------------
+  function renderDiaEspecial() {
+    const especial = CapelaLiturgy.getSpecialDay();
+    const banner = document.getElementById("dia-especial-banner");
+    if (!banner) return;
+
+    if (especial) {
+      setText("dia-especial-nome", especial.nome);
+      setText("dia-especial-nota", especial.nota);
+      banner.classList.remove("hidden");
+    } else {
+      banner.classList.add("hidden");
     }
+  }
+
+  // ---------------------------------------------------------------------
+  // Liturgia de Hoje: tempo litúrgico, Ano/Ciclo (A/B/C + I/II) e, quando
+  // aplicável, a semana do Tempo Comum.
+  // ---------------------------------------------------------------------
+  function renderLiturgiaDoDia() {
+    const season = CapelaLiturgy.getLiturgicalSeason();
+    const proxima = CapelaLiturgy.getNextMass();
+    const ciclo = CapelaLiturgy.getLiturgicalYearCycle();
+    const semana = CapelaLiturgy.getOrdinaryWeekNumber();
+
+    setText("liturgia-data-hoje", formatarDataHoje());
+    setText("liturgia-tempo-nome", season.name);
+    setText("liturgia-ciclo", "Ano " + ciclo.cicloDominical + " · Ciclo Ferial " + ciclo.cicloFerial);
+
+    const semanaEl = document.getElementById("liturgia-semana");
+    if (semanaEl) {
+      if (semana && semana >= 1 && semana <= 34) {
+        semanaEl.textContent = (ORDINAIS[semana - 1] || (semana + "ª")) + " Semana do Tempo Comum";
+        semanaEl.classList.remove("hidden");
+      } else {
+        semanaEl.classList.add("hidden");
+      }
+    }
+
+    const badge = document.getElementById("liturgia-cor-badge");
+    if (badge) badge.style.backgroundColor = season.color;
+
+    const proximaEl = document.getElementById("liturgia-proxima-celebracao");
+    if (proximaEl && proxima) {
+      const quando = proxima.ehHoje ? "hoje" : proxima.diaLabel;
+      proximaEl.textContent = "Próxima celebração aqui na capela: " + quando + " às " + proxima.inicio.replace(":", "h");
+    }
+
+    const linkEl = document.getElementById("liturgia-link-oficial");
+    if (linkEl) linkEl.setAttribute("href", cfg.linkLiturgiaOficial);
+  }
+
+  // ---------------------------------------------------------------------
+  // Santo do Dia
+  // ---------------------------------------------------------------------
+  function renderSantoDoDia() {
+    const hoje = new Date();
+    const mes = hoje.getMonth() + 1;
+    const dia = hoje.getDate();
+
+    const santo = (cfg.santoral || []).find(function (s) { return s.mes === mes && s.dia === dia; });
+
+    if (santo) {
+      setText("santo-nome", santo.nome);
+      setText("santo-resumo", santo.resumo);
+      show("santo-encontrado");
+      hide("santo-nao-encontrado");
+    } else {
+      hide("santo-encontrado");
+      show("santo-nao-encontrado");
+    }
+  }
+
+  // ---------------------------------------------------------------------
+  // Terço do Dia: mistério calculado pelo dia da semana (e, aos domingos,
+  // pelo tempo litúrgico corrente — ver CapelaLiturgy.getRosaryMysteryKey).
+  // ---------------------------------------------------------------------
+  function renderTercoDoDia() {
+    const season = CapelaLiturgy.getLiturgicalSeason();
+    const chave = CapelaLiturgy.getRosaryMysteryKey(new Date(), season);
+    const conjunto = (cfg.rosario || {})[chave];
+    if (!conjunto) return;
+
+    setText("rosario-nome", conjunto.nome);
+    setText("rosario-dias", conjunto.dias);
+
+    const lista = conjunto.misterios.map(function (m, i) {
+      return '<li class="flex gap-3">' +
+        '<span class="shrink-0 w-6 h-6 rounded-full bg-liturgy-soft text-liturgy-primary transition-liturgy text-[11px] font-bold flex items-center justify-center mt-0.5">' + (i + 1) + '</span>' +
+        '<span><span class="text-brand-dark font-medium">' + m.titulo + '</span>' +
+        '<span class="block text-xs text-gray-400 uppercase tracking-widest mt-0.5">Fruto: ' + m.fruto + '</span></span>' +
+        '</li>';
+    }).join("");
+
+    setHTML("rosario-lista", lista);
+  }
+
+  // ---------------------------------------------------------------------
+  // Oração Mariana do Tempo: Angelus, exceto no Tempo Pascal, quando a
+  // tradição da Igreja substitui pelo Regina Coeli.
+  // ---------------------------------------------------------------------
+  function renderOracaoDoTempo() {
+    const season = CapelaLiturgy.getLiturgicalSeason();
+    const chave = CapelaLiturgy.getMarianAntiphonKey(season);
+    const oracao = (cfg.oracoesMarianas || {})[chave];
+    if (!oracao) return;
+
+    setText("oracao-titulo", oracao.titulo);
+    setText("oracao-subtitulo", oracao.subtitulo);
+    setHTML("oracao-texto", oracao.texto.split("\n\n").map(function (bloco) {
+      return "<p class=\"mb-3 last:mb-0\">" + bloco.replace(/\n/g, "<br>") + "</p>";
+    }).join(""));
+  }
+
+  // ---------------------------------------------------------------------
+  // Catecismo do Dia
+  // ---------------------------------------------------------------------
+  function renderCatecismoDoDia() {
+    const lista = cfg.catecismo || [];
+    if (lista.length === 0) return;
+
+    const start = new Date(new Date().getFullYear(), 0, 0);
+    const diff = new Date() - start;
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const item = lista[dayOfYear % lista.length];
+
     setText("catecismo-parte", item.parte);
     setText("catecismo-tema", item.tema);
     setText("catecismo-texto", item.texto);
-    showState("catecismo", "ready");
+  }
+
+  // ---------------------------------------------------------------------
+  // Compartilhar o resumo do dia via WhatsApp (share genérico, sem número
+  // fixo — abre o seletor de contatos do próprio usuário).
+  // ---------------------------------------------------------------------
+  function montarResumoParaCompartilhar() {
+    const season = CapelaLiturgy.getLiturgicalSeason();
+    const ciclo = CapelaLiturgy.getLiturgicalYearCycle();
+    const chaveTerco = CapelaLiturgy.getRosaryMysteryKey(new Date(), season);
+    const terco = (cfg.rosario || {})[chaveTerco];
+
+    let texto = "*Palavra Viva — " + cfg.nome + "*\n";
+    texto += formatarDataHoje() + "\n\n";
+    texto += "🕊️ " + season.name + " (Ano " + ciclo.cicloDominical + ")\n";
+    if (terco) texto += "📿 Terço de hoje: " + terco.nome + "\n";
+    texto += "\nConfira a liturgia completa e a vida da nossa comunidade:\n" + window.location.href.split("#")[0] + "#palavra-viva";
+
+    return texto;
+  }
+
+  // Delegação de evento (registrada uma única vez): funciona mesmo que o
+  // conteúdo do dia seja recalculado depois, sem nunca duplicar o listener.
+  function initCompartilhar() {
+    document.addEventListener("click", function (event) {
+      const btn = event.target.closest("#btn-compartilhar-palavra");
+      if (!btn) return;
+      const texto = montarResumoParaCompartilhar();
+      const link = "https://api.whatsapp.com/send?text=" + encodeURIComponent(texto);
+      window.open(link, "_blank");
+    });
+  }
+
+  function renderConteudoDoDia() {
+    renderDiaEspecial();
+    renderLiturgiaDoDia();
+    renderSantoDoDia();
+    renderTercoDoDia();
+    renderOracaoDoTempo();
+    renderCatecismoDoDia();
   }
 
   function init() {
-    renderEvangelho();
-    renderSanto();
-    renderCatecismo();
+    renderConteudoDoDia();
+    initCompartilhar();
   }
 
-  return { init: init };
+  return { init: init, refresh: renderConteudoDoDia };
 })();

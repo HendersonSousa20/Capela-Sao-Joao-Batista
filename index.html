@@ -205,43 +205,49 @@
 
     <section id="palavra-viva" class="py-24 md:py-32 bg-gradient-to-b from-liturgy-soft/40 to-white transition-liturgy relative">
       <div class="container mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16" data-reveal>
+        <div class="text-center max-w-2xl mx-auto mb-12" data-reveal>
           <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs block mb-4">Alimento Diário</span>
           <h2 class="font-display text-4xl md:text-6xl uppercase mb-4 text-brand-dark">Palavra <span class="text-liturgy-primary transition-liturgy">Viva</span></h2>
-          <p class="text-gray-500 text-lg">O Evangelho, o Santo e um ensinamento do Catecismo, atualizados automaticamente todos os dias.</p>
+          <p class="text-gray-500 text-lg">A liturgia de hoje, o Santo do dia, o Terço, uma oração mariana e um ensinamento do Catecismo — tudo calculado direto no seu navegador, sem depender de nenhum serviço externo.</p>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-6" data-reveal-group>
+        <!-- Faixa de solenidade/festa especial (só aparece quando o dia coincide com uma) -->
+        <div id="dia-especial-banner" class="hidden max-w-3xl mx-auto mb-12 rounded-2xl border border-liturgy-primary/20 bg-liturgy-soft/60 transition-liturgy px-6 py-5 flex items-start gap-4" data-reveal>
+          <div class="w-10 h-10 rounded-full bg-liturgy-primary/15 text-liturgy-primary transition-liturgy flex items-center justify-center shrink-0">
+            <i data-lucide="star" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-liturgy-primary transition-liturgy font-bold uppercase tracking-widest text-[10px] mb-1">Hoje a Igreja celebra</p>
+            <p id="dia-especial-nome" class="font-display text-xl uppercase text-brand-dark leading-tight mb-1"></p>
+            <p id="dia-especial-nota" class="text-gray-600 text-sm leading-relaxed"></p>
+          </div>
+        </div>
 
-          <!-- Evangelho do Dia -->
+        <div class="grid lg:grid-cols-3 gap-6 mb-6" data-reveal-group>
+
+          <!-- Liturgia de Hoje -->
           <div class="faith-card p-8 flex flex-col">
             <div class="flex items-center gap-3 mb-6">
               <div class="w-11 h-11 bg-liturgy-soft text-liturgy-primary rounded-xl flex items-center justify-center transition-liturgy shrink-0">
                 <i data-lucide="book-marked" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Evangelho do Dia</p>
-                <p id="evangelho-data" class="text-xs text-gray-400"></p>
+                <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Liturgia de Hoje</p>
+                <p id="liturgia-data-hoje" class="text-xs text-gray-400 capitalize"></p>
               </div>
             </div>
 
-            <div id="evangelho-loading" class="space-y-3 flex-1">
-              <div class="skeleton-line h-3 w-3/4"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-              <div class="skeleton-line h-3 w-2/3"></div>
-            </div>
-
-            <div id="evangelho-ready" class="hidden flex-1 flex flex-col">
-              <p id="evangelho-titulo-liturgico" class="text-liturgy-primary text-xs font-bold uppercase tracking-widest mb-2 transition-liturgy"></p>
-              <p id="evangelho-referencia" class="font-display text-xl uppercase text-brand-dark mb-4"></p>
-              <p id="evangelho-texto" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line flex-1 overflow-y-auto max-h-64 pr-2"></p>
-            </div>
-
-            <div id="evangelho-error" class="hidden flex-1 flex flex-col items-center justify-center text-center py-6">
-              <i data-lucide="wifi-off" class="w-6 h-6 text-gray-300 mb-3"></i>
-              <p class="text-gray-400 text-sm mb-4">Não foi possível carregar o Evangelho agora.</p>
-              <a href="https://sagradaliturgia.com.br/" target="_blank" rel="noopener" class="text-liturgy-primary text-xs font-bold uppercase tracking-widest hover:underline">Ver liturgia de hoje &rarr;</a>
+            <div class="flex-1 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <span id="liturgia-cor-badge" class="w-3 h-3 rounded-full shrink-0 transition-liturgy"></span>
+                <p id="liturgia-tempo-nome" class="font-display text-xl uppercase text-brand-dark"></p>
+              </div>
+              <p id="liturgia-ciclo" class="text-[11px] font-bold uppercase tracking-widest text-liturgy-primary transition-liturgy mb-1"></p>
+              <p id="liturgia-semana" class="hidden text-xs text-gray-400 uppercase tracking-widest mb-4"></p>
+              <p id="liturgia-proxima-celebracao" class="text-gray-600 text-sm leading-relaxed flex-1 mt-2"></p>
+              <a id="liturgia-link-oficial" href="#" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-liturgy-primary text-xs font-bold uppercase tracking-widest hover:underline">
+                Ler as leituras completas de hoje <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </a>
             </div>
           </div>
 
@@ -254,26 +260,15 @@
               <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Santo do Dia</p>
             </div>
 
-            <div id="santo-loading" class="space-y-3 flex-1">
-              <div class="skeleton-line h-4 w-5/6"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-              <div class="skeleton-line h-3 w-1/2"></div>
-            </div>
-
-            <div id="santo-ready" class="hidden flex-1 flex flex-col">
+            <div id="santo-encontrado" class="hidden flex-1 flex flex-col">
               <p id="santo-nome" class="font-display text-xl uppercase text-brand-dark mb-3 leading-tight"></p>
-              <p id="santo-resumo" class="text-gray-600 text-sm leading-relaxed"></p>
-              <div id="santo-completo-wrap" class="hidden mt-3 max-h-48 overflow-y-auto pr-2">
-                <p id="santo-completo" class="text-gray-600 text-sm leading-relaxed whitespace-pre-line"></p>
-              </div>
-              <button id="santo-expandir-btn" type="button" class="hidden mt-4 text-liturgy-primary text-xs font-bold uppercase tracking-widest hover:underline text-left">Ler biografia completa</button>
+              <p id="santo-resumo" class="text-gray-600 text-sm leading-relaxed flex-1"></p>
             </div>
 
-            <div id="santo-error" class="hidden flex-1 flex flex-col items-center justify-center text-center py-6">
-              <i data-lucide="wifi-off" class="w-6 h-6 text-gray-300 mb-3"></i>
-              <p class="text-gray-400 text-sm mb-4">Não foi possível carregar o Santo do Dia agora.</p>
-              <a href="https://santo.cancaonova.com" target="_blank" rel="noopener" class="text-liturgy-primary text-xs font-bold uppercase tracking-widest hover:underline">Ver santo de hoje &rarr;</a>
+            <div id="santo-nao-encontrado" class="hidden flex-1 flex flex-col items-center justify-center text-center py-4">
+              <i data-lucide="calendar-heart" class="w-6 h-6 text-liturgy-primary/40 mb-3"></i>
+              <p class="text-gray-500 text-sm mb-4">Hoje a Igreja celebra a comunhão de todos os santos. Confira o calendário completo do dia no link oficial.</p>
+              <a href="https://www.cnbb.org.br/liturgia-diaria/" target="_blank" rel="noopener" class="text-liturgy-primary text-xs font-bold uppercase tracking-widest hover:underline">Ver calendário completo &rarr;</a>
             </div>
           </div>
 
@@ -286,29 +281,57 @@
               <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Catecismo do Dia</p>
             </div>
 
-            <div id="catecismo-loading" class="space-y-3 flex-1">
-              <div class="skeleton-line h-3 w-2/3"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-              <div class="skeleton-line h-3 w-full"></div>
-            </div>
-
-            <div id="catecismo-ready" class="hidden flex-1 flex flex-col">
+            <div class="flex-1 flex flex-col">
               <p id="catecismo-parte" class="text-liturgy-primary text-xs font-bold uppercase tracking-widest mb-2 transition-liturgy"></p>
               <p id="catecismo-tema" class="font-display text-xl uppercase text-brand-dark mb-4"></p>
               <p id="catecismo-texto" class="text-gray-600 text-sm leading-relaxed flex-1"></p>
-            </div>
-
-            <div id="catecismo-error" class="hidden flex-1 flex flex-col items-center justify-center text-center py-6">
-              <i data-lucide="scroll-text" class="w-6 h-6 text-gray-300 mb-3"></i>
-              <p class="text-gray-400 text-sm">Reflexão indisponível no momento.</p>
             </div>
           </div>
 
         </div>
 
-        <p class="text-center text-gray-400 text-xs mt-8">Leituras via API pública de liturgia diária (sagradaliturgia.com.br / Canção Nova). Texto do Catecismo em elaboração própria, inspirado no CIC.</p>
+        <div class="grid lg:grid-cols-2 gap-6" data-reveal-group>
+
+          <!-- Terço do Dia -->
+          <div class="faith-card p-8 flex flex-col">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-11 h-11 bg-liturgy-soft text-liturgy-primary rounded-xl flex items-center justify-center transition-liturgy shrink-0">
+                <i data-lucide="circle-dot" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Terço do Dia</p>
+                <p id="rosario-nome" class="text-xs text-gray-400"></p>
+              </div>
+            </div>
+            <p id="rosario-dias" class="text-liturgy-primary transition-liturgy text-[11px] font-bold uppercase tracking-widest mb-4"></p>
+            <ul id="rosario-lista" class="space-y-3 text-sm"></ul>
+          </div>
+
+          <!-- Oração Mariana do Tempo -->
+          <div class="faith-card p-8 flex flex-col">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-11 h-11 bg-liturgy-soft text-liturgy-primary rounded-xl flex items-center justify-center transition-liturgy shrink-0">
+                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p id="oracao-titulo" class="text-[10px] uppercase font-bold tracking-widest text-gray-400"></p>
+                <p id="oracao-subtitulo" class="text-xs text-gray-400"></p>
+              </div>
+            </div>
+            <div id="oracao-texto" class="text-gray-600 text-sm leading-relaxed flex-1"></div>
+          </div>
+
+        </div>
+
+        <div class="flex flex-col items-center gap-4 mt-10">
+          <button id="btn-compartilhar-palavra" type="button" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-liturgy-primary transition-all duration-300 shadow-lg">
+            <i data-lucide="share-2" class="w-4 h-4"></i> Compartilhar a Palavra de hoje
+          </button>
+          <p class="text-center text-gray-400 text-xs max-w-2xl">Cor, Ano/Ciclo litúrgico, semana do Tempo Comum, solenidades, Terço e oração mariana calculados localmente (algoritmo da Páscoa e regras oficiais do calendário romano). Calendário de santos: Calendário Romano Geral da Igreja Católica. Texto do Catecismo em elaboração própria, inspirado no CIC. Nada nesta seção depende de internet ou de serviços de terceiros.</p>
+        </div>
       </div>
     </section>
+
 
     <section id="about" class="py-24 md:py-32 container mx-auto px-6">
       <div class="grid lg:grid-cols-12 gap-16 items-center">
@@ -621,7 +644,6 @@
     <!-- Ordem importa: config primeiro, main.js por último -->
     <script src="./js/config.js" defer></script>
     <script src="./js/liturgy.js" defer></script>
-    <script src="./js/catholic-api.js" defer></script>
     <script src="./js/content.js" defer></script>
     <script src="./js/dailyfaith.js" defer></script>
     <script src="./js/gallery.js" defer></script>
