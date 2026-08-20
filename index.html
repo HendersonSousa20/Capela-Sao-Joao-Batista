@@ -248,6 +248,20 @@
           <p class="text-gray-500 text-lg">A liturgia de hoje, o Santo do dia, o Terço, uma oração mariana e um ensinamento do Catecismo — tudo calculado direto no seu navegador, sem depender de nenhum serviço externo.</p>
         </div>
 
+        <!-- Primeira Sexta-Feira / Primeiro Sábado do mês (só aparece quando o dia coincide) -->
+        <div id="primeiro-dia-banner" class="hidden max-w-3xl mx-auto mb-8 rounded-2xl border border-liturgy-primary/20 bg-white px-6 py-5 flex items-start gap-4 shadow-sm" data-reveal>
+          <div class="w-10 h-10 rounded-full bg-liturgy-soft text-liturgy-primary transition-liturgy flex items-center justify-center shrink-0">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-liturgy-primary transition-liturgy font-bold uppercase tracking-widest text-[10px] mb-1">
+              <span id="primeiro-dia-titulo"></span> · <span id="primeiro-dia-dedicacao"></span>
+            </p>
+            <p id="primeiro-dia-texto" class="text-gray-600 text-sm leading-relaxed mb-2"></p>
+            <p id="primeiro-dia-pratica" class="text-brand-dark text-sm font-medium leading-relaxed"></p>
+          </div>
+        </div>
+
         <!-- Faixa de solenidade/festa especial (só aparece quando o dia coincide com uma) -->
         <div id="dia-especial-banner" class="hidden max-w-3xl mx-auto mb-12 rounded-2xl border border-liturgy-primary/20 bg-liturgy-soft/60 transition-liturgy px-6 py-5 flex items-start gap-4" data-reveal>
           <div class="w-10 h-10 rounded-full bg-liturgy-primary/15 text-liturgy-primary transition-liturgy flex items-center justify-center shrink-0">
@@ -341,7 +355,10 @@
               </div>
             </div>
             <p id="rosario-dias" class="text-liturgy-primary transition-liturgy text-[11px] font-bold uppercase tracking-widest mb-4"></p>
-            <ul id="rosario-lista" class="space-y-3 text-sm"></ul>
+            <ul id="rosario-lista" class="space-y-3 text-sm mb-6"></ul>
+            <button id="btn-abrir-terco-guiado" type="button" class="mt-auto inline-flex items-center justify-center gap-2 bg-liturgy-primary transition-liturgy text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">
+              <i data-lucide="play" class="w-4 h-4"></i> Rezar o Terço Guiado
+            </button>
           </div>
 
           <!-- Oração Mariana do Tempo -->
@@ -544,7 +561,7 @@
           </a>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[250px]" id="galeria-grid" data-reveal-group></div>
+        <div id="galeria-grid" data-reveal-group></div>
       </div>
     </section>
 
@@ -683,6 +700,7 @@
     <script src="./js/liturgy.js" defer></script>
     <script src="./js/content.js" defer></script>
     <script src="./js/dailyfaith.js" defer></script>
+    <script src="./js/rosary.js" defer></script>
     <script src="./js/gallery.js" defer></script>
     <script src="./js/contact.js" defer></script>
     <script src="./js/ui.js" defer></script>

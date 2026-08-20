@@ -213,3 +213,13 @@ html {
 #rosario-lista {
   list-style: none;
 }
+
+/* Carrossel da galeria: esconde a barra de rolagem nativa mas mantém o
+   scroll (arraste/roda do mouse/swipe) totalmente funcional */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legado */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge novo */
+}

@@ -42,10 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
   CapelaContact.init();
   CapelaUI.init();
 
-  // Conteúdo do dia (Evangelho, Santo, Catecismo): vem de módulos com
-  // fallback próprio (ver catholic-api.js) — nunca trava o resto da página
-  // mesmo se a API estiver fora do ar.
+  // Conteúdo do dia (Liturgia, Santo, Terço, Catecismo): tudo calculado
+  // localmente em js/liturgy.js + js/dailyfaith.js — sem chamada de rede,
+  // então nunca fica em estado de erro nem trava o resto da página.
   if (window.CapelaDailyFaith) CapelaDailyFaith.init();
+  if (window.CapelaRosaryGuide) CapelaRosaryGuide.init();
 
   if (window.lucide) lucide.createIcons();
 

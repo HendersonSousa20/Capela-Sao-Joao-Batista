@@ -398,12 +398,24 @@ window.CapelaLiturgy = (function () {
     return { diaNovena: diaNovena, conteudo: conteudo, oracaoFinal: cfgNovena.oracaoFinal, festa: festa };
   }
 
+  // Primeira Sexta-Feira ou Primeiro Sábado do mês: "primeira/primeiro"
+  // significa a sexta ou o sábado cuja data cai entre o dia 1 e o dia 7
+  // do mês — a mesma regra usada por qualquer calendário devocional.
+  function getFirstFridaySaturdayInfo(now) {
+    now = now || new Date();
+    if (now.getDate() > 7) return null;
+    if (now.getDay() === 5) return { tipo: "sexta" };
+    if (now.getDay() === 6) return { tipo: "sabado" };
+    return null;
+  }
+
   return {
     getLiturgicalSeason: getLiturgicalSeason,
     getNextMass: getNextMass,
     isOpenNow: isOpenNow,
     daysUntilFesta: daysUntilFesta,
     getNovenaInfo: getNovenaInfo,
+    getFirstFridaySaturdayInfo: getFirstFridaySaturdayInfo,
     getLiturgicalYearCycle: getLiturgicalYearCycle,
     getSpecialDay: getSpecialDay,
     getOrdinaryWeekNumber: getOrdinaryWeekNumber,

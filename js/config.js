@@ -294,6 +294,25 @@ window.CapelaConfig = {
     ]
   },
 
+  // Primeira Sexta-Feira / Primeiro Sábado do mês: duas devoções muito
+  // praticadas no Brasil. js/liturgy.js calcula sozinho se hoje é uma
+  // delas (dia do mês entre 1 e 7, caindo numa sexta ou num sábado) —
+  // não precisa de nenhuma manutenção de mês a mês.
+  primeirasSextasSabados: {
+    sexta: {
+      titulo: "Primeira Sexta-Feira",
+      dedicacao: "Sagrado Coração de Jesus",
+      texto: "Devoção reparadora ao Sagrado Coração de Jesus, praticada na primeira sexta-feira de cada mês há séculos na tradição da Igreja, unindo a Eucaristia à confiança nas promessas do Coração de Jesus a quem O busca com fidelidade.",
+      pratica: "Participar da Santa Missa e receber a Comunhão em espírito de reparação, se possível durante nove primeiras sextas-feiras consecutivas."
+    },
+    sabado: {
+      titulo: "Primeiro Sábado do Mês",
+      dedicacao: "Imaculado Coração de Maria",
+      texto: "Devoção pedida por Nossa Senhora em Fátima, unindo confissão, comunhão, terço e um momento de meditação em reparação pelas ofensas ao Imaculado Coração de Maria.",
+      pratica: "Confessar-se (até 8 dias antes ou depois), comungar, rezar um terço e meditar 15 minutos sobre os mistérios do Rosário, se possível durante cinco primeiros sábados consecutivos."
+    }
+  },
+
   pix: {
     // TODO (responsável pela capela): substitua pela chave Pix oficial.
     chaveConfigurada: false,
@@ -460,6 +479,21 @@ window.CapelaConfig = {
       subtitulo: "Substitui o Angelus durante todo o Tempo Pascal",
       texto: "Rainha do Céu, alegrai-vos, aleluia.\nPorque Aquele que merecestes trazer em vosso seio, aleluia,\nressuscitou como disse, aleluia.\nRogai a Deus por nós, aleluia.\n\nExultai e alegrai-vos, Virgem Maria, aleluia,\nporque o Senhor ressuscitou verdadeiramente, aleluia."
     }
+  },
+
+  // Textos das orações tradicionais usadas no Terço Guiado
+  // (js/rosary.js). Domínio público, mesma natureza das orações
+  // marianas acima — centralizados aqui para quem quiser revisar ou
+  // ajustar a redação sem mexer em nenhuma linha de lógica.
+  oracoesTradicionais: {
+    sinalDaCruz: "Em nome do Pai, e do Filho, e do Espírito Santo. Amém.",
+    credo: "Creio em Deus Pai todo-poderoso, criador do Céu e da Terra. E em Jesus Cristo, seu único Filho, nosso Senhor, que foi concebido pelo poder do Espírito Santo, nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia; subiu aos Céus; está sentado à direita de Deus Pai todo-poderoso, donde há de vir a julgar os vivos e os mortos. Creio no Espírito Santo, na Santa Igreja Católica, na comunhão dos santos, na remissão dos pecados, na ressurreição da carne, na vida eterna. Amém.",
+    paiNosso: "Pai Nosso, que estais no Céu, santificado seja o vosso Nome; venha a nós o vosso Reino; seja feita a vossa vontade, assim na terra como no Céu. O pão nosso de cada dia nos dai hoje; perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido; e não nos deixeis cair em tentação; mas livrai-nos do mal. Amém.",
+    aveMaria: "Ave Maria, cheia de graça, o Senhor é convosco; bendita sois vós entre as mulheres, e bendito é o fruto do vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora da nossa morte. Amém.",
+    gloria: "Glória ao Pai, e ao Filho, e ao Espírito Santo. Como era no princípio, agora e sempre. Amém.",
+    oracaoFatima: "Ó meu Jesus, perdoai-nos, livrai-nos do fogo do Inferno, levai as almas todas para o Céu, principalmente as que mais precisarem.",
+    salveRainha: "Salve, Rainha, Mãe de misericórdia, vida, doçura, esperança nossa, salve! A vós bradamos, os degredados filhos de Eva. A vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, advogada nossa, esses vossos olhos misericordiosos a nós volvei. E depois deste desterro, mostrai-nos Jesus, bendito fruto do vosso ventre. Ó clemente, ó piedosa, ó doce sempre Virgem Maria!",
+    versiculoFinal: { v: "Rogai por nós, Santa Mãe de Deus.", r: "Para que sejamos dignos das promessas de Cristo." }
   },
 
   // Galeria: array vazio de propósito — sem fotos reais cedidas pela

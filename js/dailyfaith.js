@@ -57,6 +57,34 @@ window.CapelaDailyFaith = (function () {
   }
 
   // ---------------------------------------------------------------------
+  // Primeira Sexta-Feira / Primeiro Sábado do mês: banner discreto (menor
+  // que a Novena, que é mais rara e mais importante), só aparece quando o
+  // dia bate com a regra.
+  // ---------------------------------------------------------------------
+  function renderPrimeiraSextaSabado() {
+    const banner = document.getElementById("primeiro-dia-banner");
+    if (!banner) return;
+
+    const info = CapelaLiturgy.getFirstFridaySaturdayInfo();
+    if (!info) {
+      banner.classList.add("hidden");
+      return;
+    }
+
+    const dados = (cfg.primeirasSextasSabados || {})[info.tipo];
+    if (!dados) {
+      banner.classList.add("hidden");
+      return;
+    }
+
+    setText("primeiro-dia-titulo", dados.titulo);
+    setText("primeiro-dia-dedicacao", dados.dedicacao);
+    setText("primeiro-dia-texto", dados.texto);
+    setText("primeiro-dia-pratica", dados.pratica);
+    banner.classList.remove("hidden");
+  }
+
+  // ---------------------------------------------------------------------
   // Faixa de destaque: solenidades e festas especiais calculadas a partir
   // da Páscoa e de datas fixas (ver CapelaLiturgy.getSpecialDay).
   // ---------------------------------------------------------------------
@@ -268,6 +296,7 @@ window.CapelaDailyFaith = (function () {
 
   function renderConteudoDoDia() {
     renderNovena();
+    renderPrimeiraSextaSabado();
     renderDiaEspecial();
     renderLiturgiaDoDia();
     renderSantoDoDia();

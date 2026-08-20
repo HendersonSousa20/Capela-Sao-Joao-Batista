@@ -24,7 +24,13 @@ js/dailyfaith.js      → desenha a seção "Palavra Viva" (Novena do Padroeiro
                           quando aplicável, Liturgia de Hoje, Santo do Dia,
                           Terço do Dia, Oração Mariana do Tempo e
                           Catecismo do Dia) — 100% local
-js/gallery.js        → desenha a galeria de fotos
+js/rosary.js          → Terço Guiado interativo: passo a passo de toda a
+                          oração do Rosário, já com o mistério certo do
+                          dia (mesma lógica do card "Terço do Dia")
+js/gallery.js        → monta o carrossel de fotos (sem limite de
+                          quantidade — 1 ou 50 fotos formam o mesmo
+                          carrossel, com setas e bolinhas de navegação)
+                          e o lightbox que abre ao clicar numa foto
 js/contact.js        → botão "Enviar Mensagem" → WhatsApp
 js/ui.js              → menu mobile, rolagem do topo, abrir/fechar FAQ
 js/experience.js      → animações de entrada, barra de progresso, botão
@@ -80,6 +86,12 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
   de qual dia é hoje está em `js/liturgy.js → getNovenaInfo`, calculada a
   partir da mesma data da festa já configurada em `festaPadroeiro` — não
   precisa de nenhuma manutenção de ano a ano.
+- **Primeira Sexta-Feira / Primeiro Sábado do mês**: banner que aparece
+  quando o dia é a primeira sexta-feira (Sagrado Coração de Jesus) ou o
+  primeiro sábado (Imaculado Coração de Maria, devoção de Fátima) do mês
+  — regra: a sexta ou o sábado cujo número do dia cai entre 1 e 7. Textos
+  em `config.js → primeirasSextasSabados`; cálculo em
+  `js/liturgy.js → getFirstFridaySaturdayInfo`.
 - **Santo do Dia**: consulta um calendário de datas fixas dos santos mais
   conhecidos da Igreja (Calendário Romano Geral), cadastrado em
   `config.js → santoral`, cobrindo mais de 190 dias do ano civil. Nos
@@ -92,6 +104,12 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
   semana — aos domingos, o conjunto também respeita o tempo litúrgico
   (Gozosos no Advento/Natal, Dolorosos na Quaresma, Gloriosos no resto do
   ano). Lista completa em `config.js → rosario`.
+- **Terço Guiado**: o botão "Rezar o Terço Guiado" no card do Terço abre
+  um passo a passo completo da oração — Sinal da Cruz, Credo, os 5
+  mistérios do dia com Pai-Nosso, Ave-Marias (com contador de contas
+  tocável) e Glória, até a Salve Rainha final. Textos das orações em
+  `config.js → oracoesTradicionais`; a sequência de passos é montada
+  sozinha em `js/rosary.js`, sempre com o mistério certo do dia.
 - **Oração Mariana do Tempo**: exibe o Angelus na maior parte do ano e o
   Regina Coeli automaticamente durante todo o Tempo Pascal, como manda a
   tradição litúrgica. Textos em `config.js → oracoesMarianas`.
@@ -102,6 +120,10 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
   (tempo litúrgico, ano/ciclo, mistério do Terço e, durante a novena, o
   dia e a intenção do padroeiro) e abre o WhatsApp para a pessoa enviar a
   quem quiser — sem número fixo, é um compartilhamento genérico.
+- **Lightbox da galeria**: clicar em qualquer foto do carrossel abre uma
+  visualização em tela cheia, com setas, navegação por teclado (setas e
+  Esc) e contador de posição — funciona com qualquer quantidade de fotos.
+
 
 ## Tarefas comuns (o que editar em `js/config.js`)
 
