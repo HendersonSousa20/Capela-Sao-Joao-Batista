@@ -117,6 +117,8 @@ window.CapelaConfig = {
     { mes: 10, dia: 2, nome: "Santos Anjos da Guarda", resumo: "Celebra os mensageiros de Deus que acompanham e protegem cada pessoa em sua caminhada." },
     { mes: 10, dia: 4, nome: "São Francisco de Assis", resumo: "Padroeiro da ecologia e da paz, viveu a pobreza radical e o amor fraterno por toda a criação." },
     { mes: 10, dia: 7, nome: "Nossa Senhora do Rosário", resumo: "Celebra a devoção mariana do terço, oração simples que percorre os mistérios da vida de Cristo." },
+    { mes: 10, dia: 12, nome: "Nossa Senhora Aparecida", resumo: "Celebra a Padroeira do Brasil, cuja imagem foi encontrada no rio Paraíba do Sul e é venerada como sinal de fé, proteção e esperança para o povo brasileiro." },
+    { mes: 10, dia: 13, nome: "São Carlo Acutis", resumo: "Celebra a vida do jovem santo italiano, conhecido por sua devoção à Eucaristia e por utilizar a tecnologia como instrumento de evangelização. No Brasil, a celebração ocorre no dia 13 de outubro, para não coincidir com Nossa Senhora Aparecida, celebrada em 12 de outubro." },
     { mes: 10, dia: 15, nome: "Santa Teresa d'Ávila", resumo: "Doutora da Igreja, reformadora do Carmelo, mestra da oração e da união mística com Deus." },
     { mes: 10, dia: 18, nome: "São Lucas Evangelista", resumo: "Médico, evangelista e companheiro de São Paulo, autor do terceiro Evangelho e de Atos dos Apóstolos." },
     { mes: 10, dia: 28, nome: "São Simão e São Judas Tadeu Apóstolos", resumo: "Dois dos Doze Apóstolos; Judas Tadeu é hoje um dos santos mais invocados nas causas difíceis." },
@@ -138,12 +140,130 @@ window.CapelaConfig = {
     { mes: 12, dia: 26, nome: "Santo Estêvão, Primeiro Mártir", resumo: "Diácono e primeiro mártir da Igreja, morreu perdoando os que o apedrejavam." },
     { mes: 12, dia: 27, nome: "São João Apóstolo e Evangelista", resumo: "O 'discípulo amado', autor do quarto Evangelho, esteve ao pé da Cruz e recebeu Maria como mãe." },
     { mes: 12, dia: 28, nome: "Santos Inocentes Mártires", resumo: "Recorda as crianças mortas por ordem de Herodes, primeiros mártires ainda que sem saber o nome de Cristo." },
-    { mes: 12, dia: 31, nome: "São Silvestre I", resumo: "Papa durante a conversão do Império Romano ao cristianismo, encerra o ano civil na tradição da Igreja." }
+    { mes: 12, dia: 31, nome: "São Silvestre I", resumo: "Papa durante a conversão do Império Romano ao cristianismo, encerra o ano civil na tradição da Igreja." },
+
+    // -----------------------------------------------------------------
+    // Complemento de cobertura (adicionado para fechar o calendário):
+    // demais memórias, festas e solenidades de data fixa do Calendário
+    // Romano Geral, a mesma fonte já usada acima. Com isso o santoral
+    // passa a cobrir a esmagadora maioria dos dias que realmente têm uma
+    // celebração fixa no calendário universal da Igreja — os dias que
+    // ainda ficam sem entrada são, em sua maioria, dias sem nenhuma
+    // memória fixa (férias do Tempo Comum), não uma lacuna de dados.
+    // -----------------------------------------------------------------
+    { mes: 1, dia: 2, nome: "São Basílio Magno e São Gregório Nazianzeno", resumo: "Bispos e doutores da Igreja, grandes defensores da fé no século IV e mestres da vida monástica no Oriente." },
+    { mes: 1, dia: 7, nome: "São Raimundo de Penhafort", resumo: "Dominicano espanhol, organizador do Direito Canônico, dedicou a vida à confissão e à reconciliação dos pecadores." },
+    { mes: 1, dia: 13, nome: "Santo Hilário de Poitiers", resumo: "Bispo e doutor da Igreja, defensor incansável da divindade de Cristo diante da heresia ariana." },
+    { mes: 1, dia: 21, nome: "Santa Inês", resumo: "Jovem mártir romana, símbolo de pureza e fidelidade a Cristo mesmo diante da morte, com apenas doze anos." },
+    { mes: 1, dia: 22, nome: "São Vicente de Saragoça", resumo: "Diácono e mártir espanhol, venerado desde os primeiros séculos pela coragem no testemunho da fé." },
+    { mes: 1, dia: 26, nome: "Santos Timóteo e Tito", resumo: "Discípulos e colaboradores de São Paulo, tornaram-se bispos e continuaram sua missão evangelizadora." },
+    { mes: 1, dia: 27, nome: "Santa Ângela Merici", resumo: "Fundadora das Ursulinas, pioneira na educação de meninas e na vida consagrada leiga." },
+    { mes: 1, dia: 31, nome: "São João Bosco", resumo: "Padre italiano, pai e mestre da juventude, fundou os Salesianos dedicados à educação dos jovens pobres." },
+    { mes: 2, dia: 6, nome: "São Paulo Miki e Companheiros", resumo: "Mártires do Japão, crucificados por sua fé em Cristo, testemunhas da Igreja nascente na Ásia." },
+    { mes: 2, dia: 8, nome: "Santa Josefina Bakhita", resumo: "Ex-escrava sudanesa que se tornou religiosa, símbolo de perdão e libertação pela graça de Deus." },
+    { mes: 2, dia: 14, nome: "São Cirilo e São Metódio", resumo: "Irmãos missionários, evangelizadores dos povos eslavos e padroeiros da Europa." },
+    { mes: 2, dia: 17, nome: "Sete Fundadores da Ordem dos Servos de Maria", resumo: "Sete leigos florentinos que deixaram tudo para viver em oração e servir a Virgem Maria." },
+    { mes: 2, dia: 21, nome: "São Pedro Damião", resumo: "Bispo e doutor da Igreja, reformador do clero, dedicou-se à disciplina e à santidade eclesiástica." },
+    { mes: 2, dia: 23, nome: "Santo Policarpo", resumo: "Bispo de Esmirna e mártir, discípulo do apóstolo João, testemunha da fé dos primeiros cristãos." },
+    { mes: 3, dia: 4, nome: "São Casimiro", resumo: "Príncipe polonês, conhecido pela vida de oração, pureza e cuidado com os pobres apesar da nobreza." },
+    { mes: 3, dia: 8, nome: "São João de Deus", resumo: "Fundador da Ordem Hospitaleira, dedicou a vida ao cuidado dos doentes e dos mais abandonados." },
+    { mes: 3, dia: 9, nome: "Santa Francisca Romana", resumo: "Leiga romana que conciliou vida de família e vida religiosa, fundadora de uma comunidade de oblatas." },
+    { mes: 3, dia: 18, nome: "São Cirilo de Jerusalém", resumo: "Bispo e doutor da Igreja, célebre catequista que preparava os catecúmenos para o Batismo." },
+    { mes: 3, dia: 23, nome: "São Turíbio de Mogrovejo", resumo: "Bispo missionário no Peru colonial, incansável na evangelização e defesa dos povos indígenas." },
+    { mes: 4, dia: 2, nome: "São Francisco de Paula", resumo: "Eremita italiano, fundador dos Mínimos, conhecido pela penitência radical e pela confiança total em Deus." },
+    { mes: 4, dia: 4, nome: "Santo Isidoro de Sevilha", resumo: "Bispo e doutor da Igreja, um dos maiores eruditos de seu tempo, patrono da internet pela busca do saber." },
+    { mes: 4, dia: 5, nome: "São Vicente Ferrer", resumo: "Dominicano espanhol, pregador itinerante que percorreu a Europa chamando o povo à conversão." },
+    { mes: 4, dia: 7, nome: "São João Batista de La Salle", resumo: "Fundador dos Irmãos das Escolas Cristãs, pioneiro da educação popular gratuita, padroeiro dos educadores." },
+    { mes: 4, dia: 11, nome: "Santo Estanislau", resumo: "Bispo polonês e mártir, defendeu a justiça diante do poder político mesmo sob risco de vida." },
+    { mes: 4, dia: 21, nome: "Santo Anselmo", resumo: "Bispo e doutor da Igreja, um dos grandes pensadores da fé cristã na Idade Média." },
+    { mes: 4, dia: 24, nome: "São Fidélis de Sigmaringen", resumo: "Frade capuchinho e mártir, advogado que se tornou padre e defensor dos pobres." },
+    { mes: 4, dia: 28, nome: "São Pedro Chanel e São Luís Maria Grignion de Montfort", resumo: "Missionário mártir na Oceania e mestre da devoção mariana, respectivamente — dois modelos de entrega total." },
+    { mes: 4, dia: 30, nome: "São Pio V", resumo: "Papa dominicano, reformador da Igreja após o Concílio de Trento, grande devoto do Rosário." },
+    { mes: 5, dia: 2, nome: "Santo Atanásio", resumo: "Bispo e doutor da Igreja, defensor incansável da divindade de Cristo diante da heresia ariana." },
+    { mes: 5, dia: 12, nome: "São Nereu, São Aquiles e São Pancrácio", resumo: "Mártires dos primeiros séculos de Roma, testemunhas da fé cristã nascente." },
+    { mes: 5, dia: 13, nome: "Nossa Senhora de Fátima", resumo: "Recorda as aparições de Maria a três pastorinhos em Fátima, Portugal, com o chamado à oração e conversão." },
+    { mes: 5, dia: 18, nome: "São João I", resumo: "Papa e mártir, morreu preso por defender a comunhão entre a Igreja de Roma e o Oriente cristão." },
+    { mes: 5, dia: 20, nome: "São Bernardino de Sena", resumo: "Franciscano pregador, difundiu a devoção ao Santíssimo Nome de Jesus por toda a Itália." },
+    { mes: 5, dia: 25, nome: "São Beda, o Venerável", resumo: "Monge, doutor da Igreja e historiador, dedicou a vida ao estudo das Escrituras e à narração da fé cristã." },
+    { mes: 5, dia: 27, nome: "Santo Agostinho de Cantuária", resumo: "Monge beneditino enviado para evangelizar a Inglaterra, primeiro arcebispo de Cantuária." },
+    { mes: 6, dia: 1, nome: "São Justino", resumo: "Filósofo e mártir do século II, um dos primeiros a explicar racionalmente a fé cristã ao mundo pagão." },
+    { mes: 6, dia: 2, nome: "São Marcelino e São Pedro", resumo: "Mártires romanos dos primeiros séculos, testemunhas de fé em meio às perseguições ao cristianismo." },
+    { mes: 6, dia: 6, nome: "Santo Norberto", resumo: "Bispo e fundador dos Premonstratenses, dedicou-se à reforma da vida religiosa e do clero de seu tempo." },
+    { mes: 6, dia: 9, nome: "Santo Efrém", resumo: "Diácono e doutor da Igreja, poeta e teólogo sírio, conhecido como a 'harpa do Espírito Santo'." },
+    { mes: 6, dia: 19, nome: "São Romualdo", resumo: "Abade e reformador monástico, fundador dos Camaldulenses, mestre de vida eremítica e contemplativa." },
+    { mes: 6, dia: 22, nome: "São Tomás Morus e São João Fisher", resumo: "Leigo e bispo ingleses, mártires por permanecerem fiéis à Igreja mesmo diante do poder do rei." },
+    { mes: 6, dia: 27, nome: "São Cirilo de Alexandria", resumo: "Bispo e doutor da Igreja, grande defensor da maternidade divina de Maria no Concílio de Éfeso." },
+    { mes: 6, dia: 28, nome: "Santo Ireneu", resumo: "Bispo e mártir, doutor da Igreja, discípulo de discípulos dos Apóstolos, defensor da fé contra as heresias." },
+    { mes: 7, dia: 4, nome: "Santa Isabel de Portugal", resumo: "Rainha conhecida pela caridade aos pobres e pelo empenho constante em construir a paz." },
+    { mes: 7, dia: 5, nome: "Santo Antônio Maria Zaccaria", resumo: "Fundador dos Barnabitas, dedicou-se à renovação espiritual do povo através da pregação e dos sacramentos." },
+    { mes: 7, dia: 9, nome: "São Agostinho Zhao Rong e Companheiros Mártires", resumo: "Grupo de mártires chineses, testemunhas da fé cristã ao longo de séculos de perseguição na China." },
+    { mes: 7, dia: 13, nome: "Santo Henrique", resumo: "Imperador do Sacro Império, conciliou o governo com uma vida de piedade e cuidado com a Igreja." },
+    { mes: 7, dia: 14, nome: "São Camilo de Lélis", resumo: "Fundador dos Camilianos, dedicou a vida ao cuidado dos doentes, padroeiro dos hospitais e enfermeiros." },
+    { mes: 7, dia: 15, nome: "São Boaventura", resumo: "Bispo e doutor da Igreja, franciscano, uniu profundamente teologia e vida espiritual." },
+    { mes: 7, dia: 20, nome: "Santo Apolinário", resumo: "Primeiro bispo de Ravena e mártir, evangelizador incansável nos primeiros séculos do cristianismo." },
+    { mes: 7, dia: 21, nome: "São Lourenço de Brindisi", resumo: "Frade capuchinho e doutor da Igreja, pregador poliglota que percorreu a Europa anunciando o Evangelho." },
+    { mes: 7, dia: 23, nome: "Santa Brígida da Suécia", resumo: "Mística e fundadora religiosa, mãe de família que depois da viuvez consagrou-se totalmente a Deus." },
+    { mes: 7, dia: 30, nome: "São Pedro Crisólogo", resumo: "Bispo e doutor da Igreja, conhecido pela eloquência de suas homilias, que lhe renderam o título 'palavra de ouro'." },
+    { mes: 8, dia: 1, nome: "Santo Afonso Maria de Ligório", resumo: "Bispo e doutor da Igreja, fundador dos Redentoristas, grande mestre da moral e da devoção popular." },
+    { mes: 8, dia: 2, nome: "Santo Eusébio de Vercelli e São Pedro Julião Eymard", resumo: "Bispo defensor da fé e apóstolo da Eucaristia, respectivamente — dois testemunhos de firmeza na doutrina e no amor ao Santíssimo." },
+    { mes: 8, dia: 5, nome: "Dedicação da Basílica de Santa Maria Maior", resumo: "Celebra a mais antiga igreja mariana do Ocidente, erguida em Roma em honra à Mãe de Deus." },
+    { mes: 8, dia: 7, nome: "São Sisto II e São Caetano", resumo: "Papa mártir e fundador dos Teatinos, respectivamente — testemunhas de fidelidade em tempos diferentes da Igreja." },
+    { mes: 8, dia: 9, nome: "Santa Teresa Benedita da Cruz (Edith Stein)", resumo: "Filósofa judia convertida ao catolicismo, carmelita e mártir, morta em Auschwitz por sua origem judaica." },
+    { mes: 8, dia: 12, nome: "Santa Joana Francisca de Chantal", resumo: "Viúva e fundadora religiosa, colaboradora de São Francisco de Sales na vida espiritual leiga." },
+    { mes: 8, dia: 13, nome: "São Ponciano e Santo Hipólito", resumo: "Papa e presbítero mártires, reconciliados no exílio após uma antiga divisão na Igreja de Roma." },
+    { mes: 8, dia: 16, nome: "Santo Estêvão da Hungria", resumo: "Primeiro rei cristão da Hungria, consagrou seu reino a Nossa Senhora e evangelizou seu povo." },
+    { mes: 8, dia: 19, nome: "São João Eudes", resumo: "Fundador de congregações dedicadas à formação do clero, propagou a devoção aos Sagrados Corações." },
+    { mes: 8, dia: 21, nome: "São Pio X", resumo: "Papa conhecido por aproximar as crianças da Eucaristia e pela simplicidade de vida mesmo no papado." },
+    { mes: 8, dia: 22, nome: "Santa Maria Rainha", resumo: "Memória que celebra Maria como Rainha do Céu e da Terra, oito dias depois da solenidade da Assunção." },
+    { mes: 8, dia: 23, nome: "Santa Rosa de Lima", resumo: "Primeira santa nascida nas Américas, viveu vida de oração e penitência dedicada aos pobres de Lima." },
+    { mes: 8, dia: 25, nome: "São Luís, Rei da França, e São José de Calasanz", resumo: "Rei que governou com justiça e fé, e sacerdote pioneiro da educação popular gratuita." },
+    { mes: 8, dia: 29, nome: "Martírio de São João Batista", resumo: "Recorda a prisão e decapitação do Precursor, que não silenciou diante da verdade mesmo sob ameaça de morte." },
+    { mes: 9, dia: 3, nome: "São Gregório Magno", resumo: "Papa e doutor da Igreja, organizador da liturgia e da ação pastoral, conhecido por sua profunda humildade." },
+    { mes: 9, dia: 9, nome: "São Pedro Claver", resumo: "Jesuíta espanhol que dedicou a vida ao cuidado e à evangelização dos escravizados que chegavam à Colômbia." },
+    { mes: 9, dia: 12, nome: "Santíssimo Nome de Maria", resumo: "Memória que celebra a devoção ao nome de Maria, invocado pelos fiéis em toda a tradição da Igreja." },
+    { mes: 9, dia: 13, nome: "São João Crisóstomo", resumo: "Bispo e doutor da Igreja, pregador de eloquência incomparável, conhecido como 'boca de ouro'." },
+    { mes: 9, dia: 16, nome: "São Cornélio e São Cipriano", resumo: "Papa e bispo mártires do século III, defenderam juntos a unidade da Igreja em tempos de perseguição." },
+    { mes: 9, dia: 17, nome: "São Roberto Belarmino", resumo: "Bispo e doutor da Igreja, teólogo jesuíta que defendeu a fé católica com clareza e profundidade." },
+    { mes: 9, dia: 19, nome: "São Januário", resumo: "Bispo e mártir napolitano, um dos santos mais venerados do sul da Itália." },
+    { mes: 9, dia: 20, nome: "São André Kim Taegon, São Paulo Chong Hasang e Companheiros", resumo: "Mártires coreanos, testemunhas da fé cristã em um dos maiores episódios de perseguição na Ásia." },
+    { mes: 9, dia: 23, nome: "São Pio de Pietrelcina (Padre Pio)", resumo: "Frade capuchinho, conhecido pela vida de oração, penitência e pela dedicação incansável ao confessionário." },
+    { mes: 9, dia: 26, nome: "São Cosme e São Damião", resumo: "Irmãos médicos e mártires, atendiam gratuitamente aos doentes, muito venerados popularmente no Brasil." },
+    { mes: 10, dia: 5, nome: "Santa Faustina Kowalska", resumo: "Religiosa polonesa, apóstola da Divina Misericórdia, recebeu de Jesus a missão de anunciar seu amor infinito." },
+    { mes: 10, dia: 6, nome: "São Bruno", resumo: "Fundador da Ordem Cartuxa, dedicou a vida ao silêncio, à oração contemplativa e à solidão com Deus." },
+    { mes: 10, dia: 9, nome: "São Dinis e Companheiros, e São João Leonardi", resumo: "Bispo mártir da Gália e fundador de congregação religiosa — dois testemunhos de fidelidade em tempos distintos." },
+    { mes: 10, dia: 11, nome: "São João XXIII", resumo: "Papa que convocou o Concílio Vaticano II, conhecido pela simplicidade, bondade e abertura ao mundo." },
+    { mes: 10, dia: 14, nome: "São Calisto I", resumo: "Papa e mártir, dedicou-se à acolhida dos pecadores arrependidos em tempos de rigor disciplinar." },
+    { mes: 10, dia: 16, nome: "Santa Edviges e Santa Margarida Maria Alacoque", resumo: "Duquesa dedicada aos pobres e religiosa que recebeu as revelações do Sagrado Coração de Jesus." },
+    { mes: 10, dia: 17, nome: "Santo Inácio de Antioquia", resumo: "Bispo e mártir dos primeiros séculos, escreveu cartas preciosas a caminho do martírio em Roma." },
+    { mes: 10, dia: 19, nome: "São João de Brébeuf e Companheiros, e São Paulo da Cruz", resumo: "Missionários mártires na América do Norte e fundador dos Passionistas, devoto da Paixão de Cristo." },
+    { mes: 10, dia: 22, nome: "São João Paulo II", resumo: "Papa polonês, um dos pontificados mais longos da história, incansável peregrino e defensor da dignidade humana." },
+    { mes: 10, dia: 23, nome: "São João de Capistrano", resumo: "Frade franciscano, pregador que uniu profundamente vida espiritual e defesa da cristandade de seu tempo." },
+    { mes: 10, dia: 24, nome: "Santo Antônio Maria Claret", resumo: "Bispo e fundador dos Claretianos, incansável pregador e confessor, dedicado à formação do clero." },
+    { mes: 11, dia: 3, nome: "São Martinho de Lima (Martín de Porres)", resumo: "Religioso dominicano peruano, filho de escravizada, dedicou-se aos pobres e doentes com humildade radical." },
+    { mes: 11, dia: 4, nome: "São Carlos Borromeu", resumo: "Bispo de Milão, grande reformador da Igreja após o Concílio de Trento, dedicado ao cuidado do clero e dos fiéis." },
+    { mes: 11, dia: 10, nome: "São Leão Magno", resumo: "Papa e doutor da Igreja, defendeu a verdadeira fé em Cristo e negociou pessoalmente a paz de Roma." },
+    { mes: 11, dia: 12, nome: "São Josafá", resumo: "Bispo e mártir, dedicou a vida à unidade entre a Igreja Oriental e Roma, morto por sua fidelidade." },
+    { mes: 11, dia: 13, nome: "São Diego de Alcalá", resumo: "Frade franciscano leigo, conhecido pela simplicidade e pela caridade constante com os mais pobres." },
+    { mes: 11, dia: 15, nome: "Santo Alberto Magno", resumo: "Bispo e doutor da Igreja, mestre de São Tomás de Aquino, uniu profundamente fé, filosofia e ciência." },
+    { mes: 11, dia: 16, nome: "Santa Margarida da Escócia e Santa Gertrudes", resumo: "Rainha dedicada à caridade e mística beneditina, ambas mestras de oração e devoção ao Coração de Jesus." },
+    { mes: 11, dia: 17, nome: "Santa Isabel da Hungria", resumo: "Princesa que dedicou sua vida e seus bens aos pobres e enfermos, padroeira das obras de caridade." },
+    { mes: 11, dia: 18, nome: "Dedicação das Basílicas de São Pedro e São Paulo", resumo: "Celebra as duas grandes basílicas romanas erguidas sobre os túmulos dos apóstolos Pedro e Paulo." },
+    { mes: 11, dia: 23, nome: "São Clemente I e São Columbano", resumo: "Papa mártir dos primeiros séculos e monge missionário irlandês, dois pilares da evangelização da Europa." },
+    { mes: 11, dia: 24, nome: "São André Dung-Lac e Companheiros Mártires", resumo: "Mártires do Vietnã, testemunhas da fé cristã diante de séculos de perseguição naquela terra." },
+    { mes: 11, dia: 25, nome: "Santa Catarina de Alexandria", resumo: "Jovem mártir conhecida por sua sabedoria e firmeza na fé diante dos sábios do império romano." },
+    { mes: 12, dia: 4, nome: "São João Damasceno", resumo: "Doutor da Igreja, grande defensor da veneração das imagens sagradas e sistematizador da fé cristã oriental." },
+    { mes: 12, dia: 9, nome: "São Juan Diego", resumo: "Indígena mexicano a quem Nossa Senhora de Guadalupe apareceu, testemunha simples e fiel da mensagem de Maria." },
+    { mes: 12, dia: 11, nome: "São Dâmaso I", resumo: "Papa que incentivou o culto aos mártires e encomendou a Vulgata, tradução latina da Bíblia, a São Jerônimo." },
+    { mes: 12, dia: 21, nome: "São Pedro Canísio", resumo: "Jesuíta e doutor da Igreja, dedicou-se ao ensino da fé através de catecismos usados por gerações." },
+    { mes: 12, dia: 23, nome: "São João de Kety", resumo: "Sacerdote e professor polonês, conhecido pela caridade discreta e pela vida simples de oração e estudo." },
+    { mes: 12, dia: 29, nome: "Santo Tomás Becket", resumo: "Bispo e mártir inglês, morto por defender a liberdade da Igreja diante do poder do rei." }
+
   ],
 
   // dia: 0=Domingo, 1=Segunda ... 6=Sábado (mesmo padrão do JS Date)
   horariosMissas: [
-    { dia: 4, diaLabel: "Quinta-feira", inicio: "19:00", fim: "20:30", titulo: "Santa Missa/Confissão" },
+    
+    { dia: 4, diaLabel: "Quinta-feira", inicio: "19:00", fim: "20:30", titulo: "Santa Missa" },
     { dia: 0, diaLabel: "Domingo",      inicio: "07:00", fim: "08:30", titulo: "Santa Missa" },
     { dia: 0, diaLabel: "Domingo",      inicio: "17:00", fim: "19:30", titulo: "Santa Missa" }
   ],
@@ -152,6 +272,26 @@ window.CapelaConfig = {
     dia: 24,
     mes: 6, // Junho — Natividade de São João Batista
     nome: "Festa de São João Batista"
+  },
+
+  // Novena de São João Batista: 9 dias de preparação para a Festa do
+  // Padroeiro (24/06), um dia por vez, do Evangelho até o lema da capela.
+  // js/liturgy.js calcula sozinho se hoje cai dentro dessa janela (15 a
+  // 23 de junho) e qual dia da novena é — não precisa mexer em nada além
+  // desta lista, ano após ano.
+  novenaPadroeiro: {
+    oracaoFinal: "São João Batista, arauto do Senhor e voz que clamou no deserto, alcançai para nós a graça de preparar com sinceridade o caminho de Jesus em nosso coração. Dai-nos a humildade de reconhecê-Lo em nossa vida e a coragem de anunciá-Lo com nossas palavras e atos, mesmo quando isso exigir de nós um sacrifício. Que, como vós, saibamos diminuir para que Cristo cresça em nós. Amém.",
+    dias: [
+      { dia: 1, titulo: "O Anúncio do Anjo", citacao: "Lucas 1, 5-17", meditacao: "Zacarias e Isabel já eram idosos e não tinham filhos, mas o anjo Gabriel anuncia o nascimento de João. Mesmo diante do que parecia impossível, Deus já preparava o precursor do Salvador.", intencao: "Peçamos a graça de confiar nas promessas de Deus, mesmo quando tudo parece impossível aos nossos olhos." },
+      { dia: 2, titulo: "A Alegria da Visitação", citacao: "Lucas 1, 39-45", meditacao: "Ainda no ventre de Isabel, João salta de alegria ao sentir a presença de Jesus no ventre de Maria. Antes mesmo de nascer, já reconhecia e se alegrava com o Senhor.", intencao: "Peçamos a graça de reconhecer a presença de Cristo em nossa vida e nos alegrarmos verdadeiramente com Ele." },
+      { dia: 3, titulo: "Seu Nome É João", citacao: "Lucas 1, 57-66", meditacao: "Contra o costume da família, Isabel e Zacarias insistem: o nome da criança é o que Deus escolheu. Um pequeno gesto de obediência que abre caminho para a missão de João.", intencao: "Peçamos a graça de obedecer à vontade de Deus, mesmo quando ela foge do que esperávamos." },
+      { dia: 4, titulo: "A Voz no Deserto", citacao: "Marcos 1, 1-4", meditacao: "João cresce e se retira ao deserto, vivendo de forma simples e austera, preparando o coração para a missão que Deus lhe confiou.", intencao: "Peçamos a graça do silêncio e da simplicidade, para escutar mais e melhor a voz de Deus." },
+      { dia: 5, titulo: "Preparai o Caminho do Senhor", citacao: "Mateus 3, 1-3", meditacao: "João começa a pregar no deserto da Judeia, chamando o povo à conversão e a preparar o coração para a chegada do Messias.", intencao: "Peçamos a graça de uma conversão sincera, que prepare de verdade o caminho do Senhor em nós." },
+      { dia: 6, titulo: "Eu Não Sou Digno", citacao: "João 1, 19-27", meditacao: "Interrogado sobre quem era, João se declara indigno até de desatar as sandálias daquele que viria depois dele — o Messias já estava no meio do povo, sem ser reconhecido.", intencao: "Peçamos a graça da humildade verdadeira diante de Deus e diante dos outros." },
+      { dia: 7, titulo: "Eis o Cordeiro de Deus", citacao: "João 1, 29-34", meditacao: "João batiza Jesus no rio Jordão e o reconhece publicamente: \"Eis o Cordeiro de Deus\" — a mesma frase que até hoje marca a identidade desta capela.", intencao: "Peçamos a graça de, como João, saber apontar Jesus aos outros com nossa vida." },
+      { dia: 8, titulo: "Convém Que Ele Cresça", citacao: "João 3, 27-30", meditacao: "João ensina aos próprios discípulos que sua missão é diminuir para que Cristo cresça — o maior dos profetas se apaga diante do Senhor.", intencao: "Peçamos a graça de nos apagarmos um pouco mais, para que Deus apareça mais em nossa vida." },
+      { dia: 9, titulo: "Fiel Até o Fim", citacao: "Marcos 6, 17-29", meditacao: "João é preso e morto por denunciar com coragem o pecado de Herodes, permanecendo fiel à verdade até o martírio.", intencao: "Peçamos a graça da coragem para viver e defender a verdade, custe o que custar." }
+    ]
   },
 
   pix: {

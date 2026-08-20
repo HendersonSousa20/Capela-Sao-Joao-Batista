@@ -17,11 +17,13 @@ js/config.js          ⭐ TODOS os dados que mudam ficam aqui (telefone,
 js/liturgy.js        → cálculo automático do tempo litúrgico, Ano/Ciclo
                           litúrgico (A/B/C + I/II), semana do Tempo Comum,
                           solenidades especiais, mistério do Terço do dia,
-                          próxima missa, "aberto agora" e contagem da festa
+                          próxima missa, "aberto agora", contagem da festa
+                          e a janela da Novena do Padroeiro
 js/content.js        → desenha na página os dados de config.js
-js/dailyfaith.js      → desenha a seção "Palavra Viva" (Liturgia de Hoje,
-                          Santo do Dia, Terço do Dia, Oração Mariana do
-                          Tempo e Catecismo do Dia) — 100% local
+js/dailyfaith.js      → desenha a seção "Palavra Viva" (Novena do Padroeiro
+                          quando aplicável, Liturgia de Hoje, Santo do Dia,
+                          Terço do Dia, Oração Mariana do Tempo e
+                          Catecismo do Dia) — 100% local
 js/gallery.js        → desenha a galeria de fotos
 js/contact.js        → botão "Enviar Mensagem" → WhatsApp
 js/ui.js              → menu mobile, rolagem do topo, abrir/fechar FAQ
@@ -53,20 +55,38 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
 - **Liturgia de Hoje**: mostra a data de hoje, o tempo litúrgico atual, o
   **Ano/Ciclo litúrgico** (Ano A/B/C das leituras dominicais + Ciclo I/II
   das leituras de semana) e, quando aplicável, a **semana do Tempo Comum**
-  (ex.: "20ª Semana do Tempo Comum") — tudo por cálculo local, sem API.
-  Também tem um link direto para o site oficial da CNBB, para quem quiser
-  ler as leituras completas do dia.
+  (ex.: "20ª Semana do Tempo Comum") — tudo por cálculo local, sem API. O
+  início e o fim de cada tempo litúrgico (inclusive o fim do Tempo do
+  Natal, no Batismo do Senhor) seguem a regra oficial de transferência da
+  Epifania usada pela CNBB, e a semana só é exibida quando o próprio
+  cálculo do tempo litúrgico confirma que o dia está mesmo no Tempo Comum
+  — nunca aparece, por exemplo, no domingo do Batismo do Senhor ou em
+  Pentecostes, que pertencem a outros tempos. Também tem um link direto
+  para o site oficial da CNBB, para quem quiser ler as leituras completas
+  do dia.
 - **Faixa de solenidade especial**: quando o dia coincide com uma festa
   maior (Cinzas, Ramos, Tríduo Pascal, Ascensão, Pentecostes, Trindade,
   Corpo de Cristo, Sagrado Coração, Cristo Rei, Todos os Santos, Finados,
   Imaculada Conceição, Natal, etc.), aparece um destaque no topo da seção
   — todas essas datas são calculadas a partir da Páscoa ou de datas fixas,
   ano após ano, sem manutenção.
+- **Novena de São João Batista**: nos 9 dias antes da Festa do Padroeiro
+  (15 a 23/06), aparece um cartão dedicado com o dia da novena, uma
+  passagem do Evangelho sobre a vida de João Batista, uma meditação
+  breve, a intenção do dia e a oração da novena — um dia por vez, do
+  Anúncio do Anjo até "Eis o Cordeiro de Deus" (mesmo lema da capela) e a
+  fidelidade até o martírio. Fora dessa janela, o cartão simplesmente não
+  aparece. Conteúdo dos 9 dias em `config.js → novenaPadroeiro`; a lógica
+  de qual dia é hoje está em `js/liturgy.js → getNovenaInfo`, calculada a
+  partir da mesma data da festa já configurada em `festaPadroeiro` — não
+  precisa de nenhuma manutenção de ano a ano.
 - **Santo do Dia**: consulta um calendário de datas fixas dos santos mais
   conhecidos da Igreja (Calendário Romano Geral), cadastrado em
-  `config.js → santoral`. Nos dias sem uma entrada cadastrada, mostra uma
-  mensagem genérica e convida a conferir o calendário completo no link
-  oficial — nunca mostra uma informação inventada.
+  `config.js → santoral`, cobrindo mais de 190 dias do ano civil. Nos
+  dias sem uma entrada cadastrada — em geral, dias sem memória fixa no
+  calendário universal —, mostra uma mensagem genérica e convida a
+  conferir o calendário completo no link oficial; nunca mostra uma
+  informação inventada.
 - **Terço do Dia**: mostra o conjunto de mistérios (Gozosos, Dolorosos,
   Luminosos ou Gloriosos) que a tradição da Igreja indica para cada dia da
   semana — aos domingos, o conjunto também respeita o tempo litúrgico
@@ -79,9 +99,9 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
   cópia do Catecismo oficial) em `config.js → catecismo`, uma por dia,
   reiniciando quando a lista acaba.
 - **Compartilhar a Palavra de hoje**: botão que monta um resumo do dia
-  (tempo litúrgico, ano/ciclo e mistério do Terço) e abre o WhatsApp para
-  a pessoa enviar a quem quiser — sem número fixo, é um compartilhamento
-  genérico.
+  (tempo litúrgico, ano/ciclo, mistério do Terço e, durante a novena, o
+  dia e a intenção do padroeiro) e abre o WhatsApp para a pessoa enviar a
+  quem quiser — sem número fixo, é um compartilhamento genérico.
 
 ## Tarefas comuns (o que editar em `js/config.js`)
 

@@ -42,23 +42,70 @@ window.CapelaLiturgy = (function () {
     const quaresmaStart = new Date(easterDate);
     quaresmaStart.setDate(easterDate.getDate() - 46);
 
+    const palmSunday = new Date(easterDate);
+    palmSunday.setDate(easterDate.getDate() - 7);
+
+    const holyThursday = new Date(easterDate);
+    holyThursday.setDate(easterDate.getDate() - 3);
+
+    const goodFriday = new Date(easterDate);
+    goodFriday.setDate(easterDate.getDate() - 2);
+
+    const holySaturday = new Date(easterDate);
+    holySaturday.setDate(easterDate.getDate() - 1);
+
+    const oitavaPascoaFim = new Date(easterDate);
+    oitavaPascoaFim.setDate(easterDate.getDate() + 7);
+
     const pentecostesDate = new Date(easterDate);
-    pentecostesDate.setDate(easterDate.getDate() + 50);
+    pentecostesDate.setDate(easterDate.getDate() + 49);
 
     const natal = new Date(year, 11, 25);
+    const oitavaNatalFim = new Date(year, 11, 25);
+    oitavaNatalFim.setDate(oitavaNatalFim.getDate() + 7); // 1º de janeiro seguinte
+
     const adventoStart = new Date(year, 11, 25);
     adventoStart.setDate(25 - (adventoStart.getDay() || 7) - 21);
 
-    if (now >= quaresmaStart && now < easterDate) {
-      return { name: "Tempo da Quaresma", color: "#6B21A8", soft: "#F3E8FF", icon: "cloud-rain" };
-    } else if (now >= easterDate && now < pentecostesDate) {
-      return { name: "Tempo Pascal", color: "#B68D40", soft: "#FEFCE8", icon: "sun" };
-    } else if (now >= adventoStart && now < natal) {
-      return { name: "Tempo do Advento", color: "#6B21A8", soft: "#F3E8FF", icon: "star" };
-    } else if ((month === 11 && day >= 25) || (month === 0 && day <= 10)) {
-      return { name: "Tempo do Natal", color: "#B68D40", soft: "#FEFCE8", icon: "baby" };
-    } else if (now.toDateString() === pentecostesDate.toDateString()) {
-      return { name: "Pentecostes", color: "#DC2626", soft: "#FEF2F2", icon: "flame" };
+    const gaudete = new Date(adventoStart);
+    gaudete.setDate(adventoStart.getDate() + 14); // 3º Domingo do Advento
+
+    const laetare = new Date(quaresmaStart);
+    laetare.setDate(quaresmaStart.getDate() + 25); // 4º Domingo da Quaresma
+
+    // Fim do Tempo do Natal: coincide exatamente com o Batismo do Senhor
+    // (mesma regra de transferência da Epifania usada em getOrdinaryWeekNumber),
+    // em vez de uma data fixa de 10 de janeiro.
+    const hojeSemHora = new Date(year, month, day);
+    const batismoDoSenhor = getBaptismOfLordSunday(year);
+
+    const ROXO = { color: "#6B21A8", soft: "#F3E8FF" };
+    const BRANCO = { color: "#B68D40", soft: "#FEFCE8" };
+    const VERMELHO = { color: "#DC2626", soft: "#FEF2F2" };
+    const ROSA = { color: "#F472B6", soft: "#FDF2F8" };
+
+    // --- Tríduo Pascal: o auge do ano litúrgico, dia a dia ---
+    if (hojeSemHora >= holyThursday && hojeSemHora < easterDate) {
+      if (sameCalendarDate(hojeSemHora, holyThursday)) return { name: "Tríduo Pascal — Quinta-feira Santa", color: BRANCO.color, soft: BRANCO.soft, icon: "grape" };
+      if (sameCalendarDate(hojeSemHora, goodFriday)) return { name: "Tríduo Pascal — Sexta-feira da Paixão", color: VERMELHO.color, soft: VERMELHO.soft, icon: "cross" };
+      return { name: "Tríduo Pascal — Sábado Santo", color: ROXO.color, soft: ROXO.soft, icon: "moon" };
+    }
+
+    if (hojeSemHora >= quaresmaStart && hojeSemHora < holyThursday) {
+      if (hojeSemHora >= palmSunday) return { name: "Semana Santa", color: VERMELHO.color, soft: VERMELHO.soft, icon: "palmtree" };
+      if (sameCalendarDate(hojeSemHora, laetare)) return { name: "Tempo da Quaresma (Domingo Laetare)", color: ROSA.color, soft: ROSA.soft, icon: "cloud-rain" };
+      return { name: "Tempo da Quaresma", color: ROXO.color, soft: ROXO.soft, icon: "cloud-rain" };
+    } else if (hojeSemHora >= easterDate && hojeSemHora < pentecostesDate) {
+      if (hojeSemHora <= oitavaPascoaFim) return { name: "Oitava de Páscoa", color: BRANCO.color, soft: BRANCO.soft, icon: "sun" };
+      return { name: "Tempo Pascal", color: BRANCO.color, soft: BRANCO.soft, icon: "sun" };
+    } else if (hojeSemHora >= adventoStart && hojeSemHora < natal) {
+      if (sameCalendarDate(hojeSemHora, gaudete)) return { name: "Tempo do Advento (Domingo Gaudete)", color: ROSA.color, soft: ROSA.soft, icon: "star" };
+      return { name: "Tempo do Advento", color: ROXO.color, soft: ROXO.soft, icon: "star" };
+    } else if ((month === 11 && day >= 25) || (month === 0 && hojeSemHora <= batismoDoSenhor)) {
+      if (hojeSemHora >= natal && hojeSemHora <= oitavaNatalFim) return { name: "Oitava de Natal", color: BRANCO.color, soft: BRANCO.soft, icon: "baby" };
+      return { name: "Tempo do Natal", color: BRANCO.color, soft: BRANCO.soft, icon: "baby" };
+    } else if (hojeSemHora.getTime() === pentecostesDate.getTime()) {
+      return { name: "Pentecostes", color: VERMELHO.color, soft: VERMELHO.soft, icon: "flame" };
     }
 
     return { name: "Tempo Comum", color: "#15803D", soft: "#F0FDF4", icon: "leaf" };
@@ -88,14 +135,18 @@ window.CapelaLiturgy = (function () {
   // Ano/Ciclo litúrgico: Ciclo Dominical (A/B/C, leituras de domingo) e
   // Ciclo Ferial (I/II, 1ª leitura da missa dos dias de semana).
   // Regra oficial: tomando Y como o ano civil em que cai a maior parte do
-  // ano litúrgico corrente, Y mod 3 = 1 → A, 2 → B, 0 → C.
+  // ano litúrgico corrente, Y mod 3 = 1 → A, 2 → B, 0 → C. O Ciclo Ferial
+  // segue a MESMA referência Y (não o ano civil corrente): os dois ciclos
+  // trocam juntos no Advento, não em 1º de janeiro — é assim que aparece
+  // nos Ordos e calendários litúrgicos oficiais (ex.: durante o Advento
+  // de um ano ímpar, já vale o Ciclo Ferial do ano par seguinte).
   function getLiturgicalYearCycle(now) {
     now = now || new Date();
     const adventStartThisYear = getAdventStart(now.getFullYear());
     const Y = (now >= adventStartThisYear) ? now.getFullYear() + 1 : now.getFullYear();
     const mod = Y % 3;
     const cicloDominical = mod === 1 ? "A" : (mod === 2 ? "B" : "C");
-    const cicloFerial = (now.getFullYear() % 2 === 0) ? "II" : "I";
+    const cicloFerial = (Y % 2 === 0) ? "II" : "I";
     return { cicloDominical: cicloDominical, cicloFerial: cicloFerial, anoReferencia: Y };
   }
 
@@ -111,6 +162,9 @@ window.CapelaLiturgy = (function () {
     const easter = getEasterDate(year);
     const adventStart = getAdventStart(year);
 
+    const sagradoCoracao = addDays(easter, 68);
+    const imaculadoCoracao = addDays(sagradoCoracao, 1);
+
     const candidatos = [
       { d: addDays(easter, -46), nome: "Quarta-feira de Cinzas", nota: "Início da Quaresma: caminho de oração, jejum e partilha com os pobres." },
       { d: addDays(easter, -7), nome: "Domingo de Ramos", nota: "Entrada de Jesus em Jerusalém e abertura da Semana Santa." },
@@ -122,10 +176,12 @@ window.CapelaLiturgy = (function () {
       { d: addDays(easter, 49), nome: "Pentecostes", nota: "Descida do Espírito Santo sobre os Apóstolos: nascimento da Igreja." },
       { d: addDays(easter, 56), nome: "Santíssima Trindade", nota: "Solenidade de Deus Pai, Filho e Espírito Santo." },
       { d: addDays(easter, 60), nome: "Corpo e Sangue de Cristo", nota: "Solenidade da Eucaristia, presença real de Cristo entre nós." },
-      { d: addDays(easter, 68), nome: "Sagrado Coração de Jesus", nota: "Celebração do amor misericordioso de Jesus pela humanidade." },
+      { d: sagradoCoracao, nome: "Sagrado Coração de Jesus", nota: "Celebração do amor misericordioso de Jesus pela humanidade." },
+      { d: imaculadoCoracao, nome: "Imaculado Coração de Maria", nota: "Memória do coração de Maria, todo entregue a Deus e unido ao de seu Filho." },
       { d: addDays(adventStart, -7), nome: "Nosso Senhor Jesus Cristo, Rei do Universo", nota: "Encerramento do Ano Litúrgico, celebrando a realeza de Cristo." },
       { d: new Date(year, 0, 1), nome: "Solenidade de Maria, Mãe de Deus", nota: "Abertura do ano civil sob a maternidade divina de Maria." },
       { d: new Date(year, 7, 15), nome: "Assunção de Nossa Senhora", nota: "Maria é assunta corpo e alma ao Céu." },
+      { d: new Date(year, 9, 12), nome: "Nossa Senhora Aparecida", nota: "Padroeira do Brasil — solenidade nacional, celebrando a Mãe de Deus sob esse título." },
       { d: new Date(year, 10, 1), nome: "Todos os Santos", nota: "Memória de todos os que já contemplam a face de Deus." },
       { d: new Date(year, 10, 2), nome: "Finados", nota: "Dia de oração por todos os fiéis defuntos." },
       { d: new Date(year, 11, 8), nome: "Imaculada Conceição de Maria", nota: "Maria foi concebida sem pecado original, cheia de graça." },
@@ -140,19 +196,49 @@ window.CapelaLiturgy = (function () {
     return null;
   }
 
+  // Domingo do Batismo do Senhor: no Brasil (regra da CNBB, seguida pela
+  // generalidade dos países que transferem a Epifania para o domingo), a
+  // Epifania é celebrada no domingo entre 2 e 8 de janeiro. Se esse
+  // domingo cair em 7 ou 8 de janeiro, o Batismo do Senhor passa para a
+  // segunda-feira seguinte; caso contrário, o Batismo é no domingo
+  // seguinte à Epifania. É a mesma regra usada pelo Missal Romano e pelo
+  // calendário litúrgico oficial da CNBB — cálculo exato, sem aproximação.
+  function getBaptismOfLordSunday(year) {
+    // Domingo entre 2 e 8 de janeiro (a Epifania transferida)
+    let epifania = new Date(year, 0, 2);
+    while (epifania.getDay() !== 0) epifania = addDays(epifania, 1);
+
+    if (epifania.getDate() === 7 || epifania.getDate() === 8) {
+      // Batismo do Senhor cai na segunda-feira seguinte à Epifania
+      return addDays(epifania, 1);
+    }
+    // Nos demais casos, Batismo do Senhor é o domingo seguinte à Epifania
+    return addDays(epifania, 7);
+  }
+
   // Número da semana do Tempo Comum (ex.: "8ª Semana do Tempo Comum").
   // Retorna null quando a data não está no Tempo Comum (Advento, Natal,
   // Quaresma ou Páscoa), já que nesses períodos as semanas não são
   // contadas dessa forma.
   //
-  // A 2ª parte do ano (Pentecostes → véspera do Advento) é calculada de
-  // trás para frente a partir da 34ª semana (Cristo Rei) — forma exata,
-  // sem depender de nenhuma data móvel adicional. A 1ª parte (Batismo do
-  // Senhor → véspera da Quaresma) é uma aproximação a partir do domingo
-  // seguinte a 6 de janeiro; pode variar ±1 semana em relação ao Missal
-  // conforme o país transfira ou não a Epifania para o domingo.
+  // Cálculo exato nas duas partes do ano, seguindo a regra do Missal
+  // Romano: a 2ª parte (Pentecostes → véspera do Advento) é contada de
+  // trás para frente a partir da 34ª semana (Cristo Rei); a 1ª parte
+  // (Batismo do Senhor → véspera da Quaresma) é contada para frente a
+  // partir da semana seguinte ao Batismo do Senhor — calculado com a
+  // mesma regra oficial de transferência da Epifania usada pela CNBB.
   function getOrdinaryWeekNumber(now) {
     now = now || new Date();
+
+    // Trava de consistência: a semana do Tempo Comum só é exibida quando
+    // o próprio cálculo do tempo litúrgico confirma que o dia está no
+    // Tempo Comum. Isso evita mostrar, por exemplo, "1ª Semana" no
+    // domingo do Batismo do Senhor ou em Pentecostes — dias que
+    // pertencem a outro tempo, mesmo caindo dentro do intervalo de datas
+    // usado para a conta.
+    const season = getLiturgicalSeason(now);
+    if (season.name !== "Tempo Comum") return null;
+
     const year = now.getFullYear();
     const easter = getEasterDate(year);
     const quaresmaStart = addDays(easter, -46);
@@ -171,10 +257,9 @@ window.CapelaLiturgy = (function () {
     }
 
     if (hoje < quaresmaStart) {
-      const epifania = new Date(year, 0, 6);
-      const offsetParaDomingo = (7 - epifania.getDay()) % 7 || 7;
-      const domingoBatismo = addDays(epifania, offsetParaDomingo);
-      const semana1Domingo = addDays(domingoBatismo, 7);
+      const batismoDoSenhor = getBaptismOfLordSunday(year);
+      const baseDomingo = addDays(batismoDoSenhor, -batismoDoSenhor.getDay());
+      const semana1Domingo = (batismoDoSenhor.getDay() === 0) ? baseDomingo : addDays(baseDomingo, 7);
       if (hoje < semana1Domingo) return null;
       const semanas = Math.round((domingoAtual - semana1Domingo) / MS_SEMANA) + 1;
       return Math.max(1, semanas);
@@ -186,9 +271,22 @@ window.CapelaLiturgy = (function () {
   // Mistério do Rosário do dia, segundo a tradição da Igreja: cada dia da
   // semana tem um conjunto fixo, com exceção do domingo, que segue o
   // tempo litúrgico (Advento/Natal → Gozosos, Quaresma → Dolorosos,
-  // demais tempos → Gloriosos).
+  // demais tempos → Gloriosos). Durante a Semana Santa e o Tríduo Pascal,
+  // a tradição sobrepõe esse padrão semanal: reza-se os Mistérios
+  // Dolorosos em todos os dias, por serem o coração da Paixão do Senhor.
   function getRosaryMysteryKey(now, season) {
     now = now || new Date();
+    season = season || getLiturgicalSeason(now);
+
+    if (season.name === "Semana Santa" || season.name.indexOf("Tríduo Pascal") === 0) {
+      return "dolorosos";
+    }
+    if (season.name === "Oitava de Páscoa") {
+      // Tradição devocional: a Oitava de Páscoa é celebrada como "um único
+      // grande Domingo" — reza-se os Mistérios Gloriosos todos os dias.
+      return "gloriosos";
+    }
+
     const dow = now.getDay(); // 0 = domingo
 
     if (dow === 1 || dow === 6) return "gozosos";
@@ -196,7 +294,6 @@ window.CapelaLiturgy = (function () {
     if (dow === 4) return "luminosos";
 
     if (dow === 0) {
-      season = season || getLiturgicalSeason(now);
       if (season.name.indexOf("Advento") !== -1 || season.name.indexOf("Natal") !== -1) return "gozosos";
       if (season.name.indexOf("Quaresma") !== -1) return "dolorosos";
       return "gloriosos";
@@ -205,12 +302,22 @@ window.CapelaLiturgy = (function () {
     return "gloriosos"; // quarta-feira
   }
 
-  // Antífona mariana do tempo: durante todo o Tempo Pascal a tradição
-  // substitui o Angelus pelo Regina Coeli; no restante do ano, reza-se o
-  // Angelus.
+  // Antífona mariana do tempo: da Vigília Pascal (Sábado Santo) até o fim
+  // do dia de Pentecostes, a tradição substitui o Angelus pelo Regina
+  // Coeli; no restante do ano — inclusive na Quinta e Sexta-feira Santa,
+  // antes da Ressurreição — reza-se o Angelus. Lista explícita em vez de
+  // correspondência por trecho do nome, para não confundir "Páscoa"
+  // (substantivo, usado em "Oitava de Páscoa") com "Pascal" (adjetivo).
+  const NOMES_REGINA_COELI = [
+    "Tríduo Pascal — Sábado Santo",
+    "Oitava de Páscoa",
+    "Tempo Pascal",
+    "Pentecostes"
+  ];
+
   function getMarianAntiphonKey(season) {
     season = season || getLiturgicalSeason();
-    return season.name === "Tempo Pascal" ? "reginaCoeli" : "angelus";
+    return NOMES_REGINA_COELI.indexOf(season.name) !== -1 ? "reginaCoeli" : "angelus";
   }
 
   function toMinutes(hhmm) {
@@ -267,11 +374,36 @@ window.CapelaLiturgy = (function () {
     return Math.round(diffMs / (1000 * 60 * 60 * 24));
   }
 
+  // Novena do Padroeiro: retorna { diaNovena (1-9), conteudo, festaEm } se
+  // hoje cair dentro da janela de 9 dias antes da Festa (24/06 → novena de
+  // 15 a 23/06), ou null no resto do ano. Puro cálculo de data a partir de
+  // festaPadroeiro — não precisa de nenhuma manutenção de ano a ano.
+  function getNovenaInfo(now) {
+    now = now || new Date();
+    const cfgFesta = (window.CapelaConfig && window.CapelaConfig.festaPadroeiro) || { dia: 24, mes: 6 };
+    const cfgNovena = (window.CapelaConfig && window.CapelaConfig.novenaPadroeiro) || null;
+    if (!cfgNovena || !cfgNovena.dias || cfgNovena.dias.length !== 9) return null;
+
+    const hoje = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const festa = new Date(hoje.getFullYear(), cfgFesta.mes - 1, cfgFesta.dia);
+    const inicioNovena = addDays(festa, -9);
+    const fimNovena = addDays(festa, -1);
+
+    if (hoje < inicioNovena || hoje > fimNovena) return null;
+
+    const diaNovena = Math.round((hoje - inicioNovena) / (24 * 60 * 60 * 1000)) + 1; // 1..9
+    const conteudo = cfgNovena.dias.find(function (d) { return d.dia === diaNovena; });
+    if (!conteudo) return null;
+
+    return { diaNovena: diaNovena, conteudo: conteudo, oracaoFinal: cfgNovena.oracaoFinal, festa: festa };
+  }
+
   return {
     getLiturgicalSeason: getLiturgicalSeason,
     getNextMass: getNextMass,
     isOpenNow: isOpenNow,
     daysUntilFesta: daysUntilFesta,
+    getNovenaInfo: getNovenaInfo,
     getLiturgicalYearCycle: getLiturgicalYearCycle,
     getSpecialDay: getSpecialDay,
     getOrdinaryWeekNumber: getOrdinaryWeekNumber,

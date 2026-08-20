@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Capela São João Batista | Aracapé, Fortaleza">
     <meta property="og:description" content="Missas aos Domingos (07h e 17h) e Quintas (19h). Rua Doutor Procópio, 1210 - Aracapé, Fortaleza - CE.">
-    <meta property="og:image" content="./img/foto da capela.png">
+    <meta property="og:image" content="./img/foto-da-capela.jpg">
     <meta property="og:locale" content="pt_BR">
 
     <link rel="icon" type="image/jpeg" href="./img/logo capela.jpg">
@@ -61,7 +61,7 @@
       "@type": "Church",
       "name": "Capela São João Batista",
       "url": "https://www.instagram.com/capelasjb_/",
-      "image": "./img/foto da capela.png",
+      "image": "./img/foto-da-capela.jpg",
       "telephone": "+55 85 98794-0594",
       "address": {
         "@type": "PostalAddress",
@@ -127,7 +127,7 @@
     </div>
 
     <section id="home" class="relative min-h-[92vh] flex items-center overflow-hidden bg-brand-dark">
-      <img src="./img/foto da capela.png" alt="Interior da Capela São João Batista" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105" style="animation-duration: 20s;">
+      <img src="./img/foto-da-capela.jpg" alt="Interior da Capela São João Batista" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105" style="animation-duration: 20s;">
       <div class="absolute inset-0 hero-mask"></div>
       <div class="grain-overlay"></div>
       <div class="cursor-glow"></div>
@@ -205,6 +205,43 @@
 
     <section id="palavra-viva" class="py-24 md:py-32 bg-gradient-to-b from-liturgy-soft/40 to-white transition-liturgy relative">
       <div class="container mx-auto px-6">
+
+        <!-- Novena de São João Batista: só aparece nos 9 dias antes da Festa do Padroeiro (15-23/06) -->
+        <div id="novena-banner" class="hidden max-w-3xl mx-auto mb-16 rounded-3xl bg-brand-dark text-white p-8 md:p-10 shadow-2xl relative overflow-hidden" data-reveal>
+          <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-brand-gold/10"></div>
+          <div class="relative">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-11 h-11 rounded-xl bg-brand-gold/15 text-brand-gold flex items-center justify-center shrink-0">
+                <i data-lucide="flame" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-brand-gold font-bold uppercase tracking-widest text-[10px] mb-1">Novena do Padroeiro</p>
+                <p id="novena-dia" class="font-display text-xl uppercase tracking-wide">—</p>
+              </div>
+            </div>
+
+            <p id="novena-titulo" class="font-display text-2xl md:text-3xl uppercase mb-1"></p>
+            <p id="novena-citacao" class="text-brand-gold text-xs uppercase tracking-widest mb-4"></p>
+            <p id="novena-meditacao" class="text-white/80 leading-relaxed mb-4"></p>
+
+            <div class="border-l-2 border-brand-gold pl-4 mb-6">
+              <p class="text-[10px] uppercase tracking-widest text-brand-gold font-bold mb-1">Intenção de hoje</p>
+              <p id="novena-intencao" class="text-white/90 italic"></p>
+            </div>
+
+            <details class="group">
+              <summary class="cursor-pointer text-brand-gold text-xs font-bold uppercase tracking-widest hover:underline list-none flex items-center gap-2">
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform group-open:rotate-180"></i>
+                Oração da Novena
+              </summary>
+              <p id="novena-oracao" class="text-white/70 text-sm leading-relaxed mt-3"></p>
+              <p class="text-white/50 text-xs mt-3">Encerre rezando um Pai-Nosso, uma Ave-Maria e um Glória em ação de graças.</p>
+            </details>
+
+            <div id="novena-pontos" class="flex items-center gap-2 mt-8"></div>
+          </div>
+        </div>
+
         <div class="text-center max-w-2xl mx-auto mb-12" data-reveal>
           <span class="text-liturgy-primary font-bold uppercase tracking-widest text-xs block mb-4">Alimento Diário</span>
           <h2 class="font-display text-4xl md:text-6xl uppercase mb-4 text-brand-dark">Palavra <span class="text-liturgy-primary transition-liturgy">Viva</span></h2>
@@ -362,7 +399,7 @@
         <div class="lg:col-span-7 relative" data-reveal style="transition-delay: 150ms;">
           <div class="absolute -inset-4 bg-liturgy-soft/50 rounded-[3rem] -z-10 transition-liturgy"></div>
           <div class="grid grid-cols-2 gap-4">
-            <img src="./img/foto da capela.png" alt="Fachada da Capela São João Batista" class="w-full h-64 md:h-96 object-cover rounded-3xl mt-12 shadow-lg">
+            <img src="./img/foto-da-capela.jpg" alt="Fachada da Capela São João Batista" class="w-full h-64 md:h-96 object-cover rounded-3xl mt-12 shadow-lg">
             <div class="w-full h-64 md:h-96 rounded-3xl shadow-lg bg-gradient-to-br from-liturgy-primary/20 via-liturgy-soft to-white flex flex-col items-center justify-center text-center p-8 border border-liturgy-primary/10">
               <i data-lucide="church" class="w-10 h-10 text-liturgy-primary mb-4"></i>
               <p class="font-display text-xl uppercase text-brand-dark leading-snug">Rua Doutor Procópio, 1210</p>

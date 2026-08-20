@@ -75,6 +75,46 @@ window.CapelaDailyFaith = (function () {
   }
 
   // ---------------------------------------------------------------------
+  // Novena de São João Batista: só aparece nos 9 dias antes da Festa do
+  // Padroeiro (15 a 23/06). Fora dessa janela, o banner fica escondido —
+  // não há nenhum estado "quase lá" ou "faltam X dias" aqui, isso já é
+  // coberto pelo contador no topo da página.
+  // ---------------------------------------------------------------------
+  function renderNovena() {
+    const banner = document.getElementById("novena-banner");
+    if (!banner) return;
+
+    const info = CapelaLiturgy.getNovenaInfo();
+    if (!info) {
+      banner.classList.add("hidden");
+      return;
+    }
+
+    const c = info.conteudo;
+    setText("novena-dia", (info.diaNovena) + "º dia da Novena");
+    setText("novena-titulo", c.titulo);
+    setText("novena-citacao", c.citacao);
+    setText("novena-meditacao", c.meditacao);
+    setText("novena-intencao", c.intencao);
+    setText("novena-oracao", info.oracaoFinal);
+
+    const pontos = document.getElementById("novena-pontos");
+    if (pontos) {
+      let html = "";
+      for (let i = 1; i <= 9; i++) {
+        const ativo = i === info.diaNovena;
+        const feito = i < info.diaNovena;
+        html += '<span class="w-2.5 h-2.5 rounded-full ' +
+          (ativo ? "bg-brand-gold scale-125" : feito ? "bg-brand-gold/50" : "bg-white/20") +
+          ' transition-all duration-300"></span>';
+      }
+      pontos.innerHTML = html;
+    }
+
+    banner.classList.remove("hidden");
+  }
+
+  // ---------------------------------------------------------------------
   // Liturgia de Hoje: tempo litúrgico, Ano/Ciclo (A/B/C + I/II) e, quando
   // aplicável, a semana do Tempo Comum.
   // ---------------------------------------------------------------------
@@ -199,9 +239,14 @@ window.CapelaDailyFaith = (function () {
     const ciclo = CapelaLiturgy.getLiturgicalYearCycle();
     const chaveTerco = CapelaLiturgy.getRosaryMysteryKey(new Date(), season);
     const terco = (cfg.rosario || {})[chaveTerco];
+    const novena = CapelaLiturgy.getNovenaInfo();
 
     let texto = "*Palavra Viva — " + cfg.nome + "*\n";
     texto += formatarDataHoje() + "\n\n";
+    if (novena) {
+      texto += "🕯️ " + novena.diaNovena + "º dia da Novena de São João Batista: " + novena.conteudo.titulo + "\n";
+      texto += "\"" + novena.conteudo.intencao + "\"\n\n";
+    }
     texto += "🕊️ " + season.name + " (Ano " + ciclo.cicloDominical + ")\n";
     if (terco) texto += "📿 Terço de hoje: " + terco.nome + "\n";
     texto += "\nConfira a liturgia completa e a vida da nossa comunidade:\n" + window.location.href.split("#")[0] + "#palavra-viva";
@@ -222,6 +267,7 @@ window.CapelaDailyFaith = (function () {
   }
 
   function renderConteudoDoDia() {
+    renderNovena();
     renderDiaEspecial();
     renderLiturgiaDoDia();
     renderSantoDoDia();
