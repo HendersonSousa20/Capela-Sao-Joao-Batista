@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // então nunca fica em estado de erro nem trava o resto da página.
   if (window.CapelaDailyFaith) CapelaDailyFaith.init();
   if (window.CapelaRosaryGuide) CapelaRosaryGuide.init();
+  if (window.CapelaWayStations) CapelaWayStations.init();
+  if (window.CapelaPWA) CapelaPWA.init();
 
   if (window.lucide) lucide.createIcons();
 

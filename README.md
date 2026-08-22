@@ -27,6 +27,8 @@ js/dailyfaith.js      → desenha a seção "Palavra Viva" (Novena do Padroeiro
 js/rosary.js          → Terço Guiado interativo: passo a passo de toda a
                           oração do Rosário, já com o mistério certo do
                           dia (mesma lógica do card "Terço do Dia")
+js/waystations.js     → Via Sacra Guiada: passo a passo pelas 14
+                          estações da Paixão, disponível o ano inteiro
 js/gallery.js        → monta o carrossel de fotos (sem limite de
                           quantidade — 1 ou 50 fotos formam o mesmo
                           carrossel, com setas e bolinhas de navegação)
@@ -35,10 +37,46 @@ js/contact.js        → botão "Enviar Mensagem" → WhatsApp
 js/ui.js              → menu mobile, rolagem do topo, abrir/fechar FAQ
 js/experience.js      → animações de entrada, barra de progresso, botão
                           "voltar ao topo", brilho no cursor do hero
+js/pwa.js             → registra o service worker e controla o banner
+                          "Instalar o app da Capela"
 js/main.js            → liga tudo isso quando a página carrega
+sw.js                 → service worker: faz o site funcionar offline e
+                          ser instalável como app (ver seção própria abaixo)
+manifest.json         → nome, ícones e cores do app instalável (PWA)
+favicon.ico           → ícone da aba do navegador
+img/icons/            → ícones do PWA em vários tamanhos, gerados a
+                          partir de img/logo capela.jpg
 img/                  → fotos do site
 img/galeria/          → pasta para colocar fotos da galeria (veja abaixo)
 ```
+
+## O site é um PWA (app instalável, funciona offline)
+
+Desde que a pessoa visite o site uma vez com internet, ele passa a
+funcionar como um aplicativo:
+
+- **No Android/Chrome**: aparece um banner "Instalar o app da Capela";
+  tocando em instalar, o site ganha um ícone na tela inicial, abre em
+  tela cheia (sem barra de endereço) e funciona mesmo sem internet — a
+  Liturgia de Hoje, o Santo do Dia, o Terço Guiado e a Via Sacra continuam
+  funcionando offline, porque tudo isso já era calculado localmente.
+- **No iOS (Safari)**: o Safari não tem instalação automática, então o
+  banner mostra a instrução manual (Compartilhar → Adicionar à Tela de
+  Início). Uma vez fechado ou instalado, o banner não aparece de novo
+  (guardado em `localStorage` do navegador da pessoa).
+- **`sw.js`** é o service worker: guarda os arquivos do site (HTML, CSS,
+  JS, imagens, ícones) e as bibliotecas externas usadas (Tailwind, Lucide
+  e a fonte do Google Fonts) na primeira visita, e depois entrega tudo
+  isso sem precisar de rede. Quando a pessoa está online, o site sempre
+  busca a versão mais nova; só usa o que está guardado quando detecta
+  que a rede falhou.
+
+**Importante para quem for editar o site no futuro:** sempre que mudar
+qualquer arquivo `.html`, `.css` ou `.js`, abra o `sw.js` e aumente o
+número em `CACHE_VERSION` (de `"v1"` para `"v2"`, por exemplo). Isso faz
+o service worker descartar o cache antigo e buscar tudo de novo — sem
+esse passo, quem já instalou o app poderia ficar preso numa versão
+desatualizada do site por tempo indefinido.
 
 ## O que já funciona sozinho (automações), sem precisar mexer no site
 
@@ -110,6 +148,14 @@ primeira versão, que usava uma API externa e caía por bloqueio de CORS).
   tocável) e Glória, até a Salve Rainha final. Textos das orações em
   `config.js → oracoesTradicionais`; a sequência de passos é montada
   sozinha em `js/rosary.js`, sempre com o mistério certo do dia.
+- **Via Sacra Guiada**: o botão "Rezar a Via Sacra" abre um passo a passo
+  pelas 14 estações tradicionais da Paixão, cada uma com versículo,
+  breve meditação e uma intenção de oração. Cada estação informa se tem
+  base bíblica direta (com a citação) ou se é tradição piedosa da Igreja,
+  não narrada nos Evangelhos canônicos — mesmo espírito de transparência
+  do restante do site. Disponível o ano inteiro, sem depender de nenhuma
+  data; dados completos em `config.js → viaSacra`, lógica em
+  `js/waystations.js`.
 - **Oração Mariana do Tempo**: exibe o Angelus na maior parte do ano e o
   Regina Coeli automaticamente durante todo o Tempo Pascal, como manda a
   tradição litúrgica. Textos em `config.js → oracoesMarianas`.
@@ -183,3 +229,11 @@ CIC, não uma cópia do texto oficial.
 Qualquer hospedagem de arquivos estáticos funciona (GitHub Pages,
 Netlify, Vercel, ou uma hospedagem compartilhada comum). Basta subir a
 pasta inteira mantendo a estrutura de pastas (`css/`, `js/`, `img/`).
+
+**Atenção:** o site precisa ser servido em **HTTPS** para o PWA
+funcionar (o navegador bloqueia service workers em conexões HTTP
+comuns, por segurança). GitHub Pages, Netlify e Vercel já entregam
+HTTPS automaticamente; se for uma hospedagem compartilhada mais antiga,
+confirme que existe um certificado SSL ativo. Sem HTTPS, o site
+continua funcionando normalmente — só a parte de instalar como app e
+funcionar offline não vai funcionar.

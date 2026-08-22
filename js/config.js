@@ -496,6 +496,31 @@ window.CapelaConfig = {
     versiculoFinal: { v: "Rogai por nós, Santa Mãe de Deus.", r: "Para que sejamos dignos das promessas de Cristo." }
   },
 
+  // Via Sacra: as 14 estações tradicionais do caminho da cruz, usadas no
+  // Terço Guiado — perdão, na Via Sacra Guiada (js/waystations.js). Cada
+  // estação informa se tem base bíblica direta (com a citação) ou se é
+  // tradição piedosa da Igreja, não narrada nos Evangelhos canônicos —
+  // mesmo espírito de transparência já usado no restante do site.
+  viaSacra: {
+    versiculo: { v: "Nós Vos adoramos, ó Cristo, e Vos bendizemos.", r: "Porque, pela vossa Santa Cruz, remistes o mundo." },
+    estacoes: [
+      { numero: 1, titulo: "Jesus é Condenado à Morte", base: "João 19, 1-16", meditacao: "Diante da multidão, Pilatos lava as mãos e entrega Jesus, mesmo reconhecendo sua inocência. O medo de desagradar cala a voz da justiça.", intencao: "Senhor, dai-nos a coragem de não condenarmos ninguém injustamente, nem por medo, nem por conveniência." },
+      { numero: 2, titulo: "Jesus Carrega a Cruz", base: "João 19, 17", meditacao: "Jesus recebe sobre os ombros o instrumento da própria morte, e começa a caminhar. Ele não recua diante do peso que Lhe foi dado carregar.", intencao: "Senhor, ajudai-nos a carregar com fé as cruzes que a vida nos apresenta." },
+      { numero: 3, titulo: "Jesus Cai Pela Primeira Vez", base: "Tradição piedosa da Igreja, não narrada nos Evangelhos", meditacao: "Exausto e ferido, Jesus cai ao chão sob o peso da cruz. Mesmo caído, Ele se levanta e continua o caminho.", intencao: "Senhor, levantai-nos toda vez que caímos pelo peso das nossas próprias fraquezas." },
+      { numero: 4, titulo: "Jesus Encontra Sua Mãe", base: "Tradição piedosa, inspirada em João 19, 25", meditacao: "No meio do caminho, os olhos de Jesus encontram os de Maria. Nenhuma palavra é registrada — apenas a dor silenciosa de uma mãe que acompanha o sofrimento do filho.", intencao: "Senhor, ensinai-nos a acompanhar quem sofre, mesmo quando não há nada que possamos dizer." },
+      { numero: 5, titulo: "Simão de Cirene Ajuda Jesus a Carregar a Cruz", base: "Marcos 15, 21; Mateus 27, 32; Lucas 23, 26", meditacao: "Simão é obrigado a ajudar Jesus a carregar a cruz. O que começa como uma imposição se torna, para a tradição da Igreja, um dos gestos mais lembrados do caminho da cruz.", intencao: "Senhor, dai-nos disposição para ajudar a carregar o peso do outro, mesmo quando isso não nos foi pedido." },
+      { numero: 6, titulo: "Verônica Enxuga o Rosto de Jesus", base: "Tradição piedosa da Igreja, não narrada nos Evangelhos canônicos", meditacao: "Em meio à multidão hostil, uma mulher se aproxima e, com um simples gesto de compaixão, enxuga o rosto machucado de Jesus.", intencao: "Senhor, dai-nos a coragem de fazer o bem mesmo quando ninguém mais está fazendo." },
+      { numero: 7, titulo: "Jesus Cai Pela Segunda Vez", base: "Tradição piedosa da Igreja, não narrada nos Evangelhos", meditacao: "O caminho continua, e o corpo de Jesus cede novamente ao peso e ao cansaço. Ainda assim, Ele se levanta mais uma vez.", intencao: "Senhor, dai-nos perseverança para recomeçar, ainda que caiamos repetidas vezes no mesmo pecado." },
+      { numero: 8, titulo: "Jesus Consola as Mulheres de Jerusalém", base: "Lucas 23, 27-31", meditacao: "Mesmo sofrendo, Jesus se volta para as mulheres que choram por Ele e as consola, convidando-as a olhar além da própria dor.", intencao: "Senhor, ensinai-nos a pensar no outro mesmo quando estamos sofrendo." },
+      { numero: 9, titulo: "Jesus Cai Pela Terceira Vez", base: "Tradição piedosa da Igreja, não narrada nos Evangelhos", meditacao: "Já perto do Calvário, Jesus cai uma terceira vez. É a queda mais dura, a poucos passos do fim do caminho.", intencao: "Senhor, dai-nos força para não desistir bem quando estamos mais perto de vencer." },
+      { numero: 10, titulo: "Jesus É Despojado de Suas Vestes", base: "Mateus 27, 35; João 19, 23-24", meditacao: "Os soldados tiram as vestes de Jesus e as sorteiam entre si. Ele é publicamente humilhado, despido até do que Lhe restava de próprio.", intencao: "Senhor, libertai-nos do apego às coisas materiais e ao que os outros pensam de nós." },
+      { numero: 11, titulo: "Jesus É Pregado na Cruz", base: "Lucas 23, 33; João 19, 18", meditacao: "As mãos que curaram e abençoaram são agora perfuradas e presas à cruz. Jesus não resiste — Ele entrega o próprio corpo por amor.", intencao: "Senhor, ensinai-nos a entregar de bom grado o que temos e o que somos, como Vós Vos entregastes por nós." },
+      { numero: 12, titulo: "Jesus Morre na Cruz", base: "Lucas 23, 44-46; Mateus 27, 45-50", meditacao: "\"Pai, em vossas mãos entrego o meu espírito\" — e Jesus expira. No momento mais escuro, Ele confia inteiramente ao Pai.", intencao: "Senhor, ensinai-nos a confiar em Deus até no momento mais difícil da nossa vida." },
+      { numero: 13, titulo: "Jesus É Descido da Cruz e Entregue a Sua Mãe", base: "João 19, 38-40 (a entrega a Maria é ampliação da tradição, inspirada na cena da Pietà)", meditacao: "O corpo sem vida de Jesus é descido da cruz e colocado nos braços de Maria — a mesma que O recebeu, ainda vivo, em Belém.", intencao: "Senhor, ensinai-nos a acolher também o que dói, como Maria acolheu o corpo do seu Filho." },
+      { numero: 14, titulo: "Jesus É Colocado no Sepulcro", base: "João 19, 40-42", meditacao: "Jesus é envolto em panos e colocado num sepulcro novo. O caminho da cruz termina em silêncio — mas esse silêncio já é o limiar da Ressurreição.", intencao: "Senhor, ensinai-nos a esperar com fé, mesmo quando tudo parece ter terminado." }
+    ]
+  },
+
   // Galeria: array vazio de propósito — sem fotos reais cedidas pela
   // comunidade ainda. Para publicar fotos: salve o arquivo em
   // img/galeria/ e adicione um objeto aqui. O site atualiza sozinho,

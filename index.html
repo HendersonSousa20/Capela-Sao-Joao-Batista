@@ -15,9 +15,18 @@
     <meta property="og:image" content="./img/foto-da-capela.jpg">
     <meta property="og:locale" content="pt_BR">
 
-    <link rel="icon" type="image/jpeg" href="./img/logo capela.jpg">
-    <link rel="apple-touch-icon" href="./img/logo capela.jpg">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="./img/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./img/icons/icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/icons/apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
     <link rel="canonical" href="https://www.instagram.com/capelasjb_/">
+
+    <!-- Suporte a "Adicionar à Tela de Início" no iOS (Safari não lê o
+         manifest.json para esse fim, precisa dessas tags específicas) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cap. S. João Batista">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -341,7 +350,7 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-6" data-reveal-group>
+        <div class="grid lg:grid-cols-3 gap-6" data-reveal-group>
 
           <!-- Terço do Dia -->
           <div class="faith-card p-8 flex flex-col">
@@ -358,6 +367,23 @@
             <ul id="rosario-lista" class="space-y-3 text-sm mb-6"></ul>
             <button id="btn-abrir-terco-guiado" type="button" class="mt-auto inline-flex items-center justify-center gap-2 bg-liturgy-primary transition-liturgy text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">
               <i data-lucide="play" class="w-4 h-4"></i> Rezar o Terço Guiado
+            </button>
+          </div>
+
+          <!-- Via Sacra -->
+          <div class="faith-card p-8 flex flex-col">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-11 h-11 bg-liturgy-soft text-liturgy-primary rounded-xl flex items-center justify-center transition-liturgy shrink-0">
+                <i data-lucide="mountain-snow" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Via Sacra</p>
+                <p class="text-xs text-gray-400">As 14 estações da Paixão</p>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-6">Um passo a passo pelo caminho da cruz, estação por estação, com uma breve meditação e uma intenção de oração em cada uma — tradicional das sextas-feiras da Quaresma, mas disponível o ano inteiro.</p>
+            <button id="btn-abrir-via-sacra" type="button" class="mt-auto inline-flex items-center justify-center gap-2 bg-liturgy-primary transition-liturgy text-white px-5 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">
+              <i data-lucide="play" class="w-4 h-4"></i> Rezar a Via Sacra
             </button>
           </div>
 
@@ -695,16 +721,40 @@
       <i data-lucide="arrow-up" class="w-5 h-5"></i>
     </button>
 
+    <!-- Banner de instalação do PWA: escondido por padrão. js/pwa.js decide
+         qual variante mostrar (Android/Chrome tem prompt automático; iOS
+         Safari não tem esse recurso, então mostra instrução manual) e nunca
+         aparece de novo depois que a pessoa fecha, uma vez por navegador. -->
+    <div id="pwa-instalar-banner" class="hidden fixed bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-brand-dark text-white rounded-2xl shadow-2xl p-5 relative">
+      <button id="pwa-instalar-fechar" aria-label="Fechar" class="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+      </button>
+      <div class="flex items-start gap-3 pr-6">
+        <div class="w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-white/10">
+          <img src="./img/icons/icon-192.png" alt="" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <p id="pwa-instalar-titulo" class="font-display uppercase tracking-wide text-sm mb-1">Instalar o app da Capela</p>
+          <p id="pwa-instalar-texto" class="text-white/70 text-xs leading-relaxed">Tenha os horários de missa e a Palavra Viva de hoje direto na tela inicial — funciona até sem internet.</p>
+        </div>
+      </div>
+      <button id="pwa-instalar-btn" type="button" class="mt-4 w-full bg-liturgy-primary transition-liturgy text-white py-2.5 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">
+        Instalar agora
+      </button>
+    </div>
+
     <!-- Ordem importa: config primeiro, main.js por último -->
     <script src="./js/config.js" defer></script>
     <script src="./js/liturgy.js" defer></script>
     <script src="./js/content.js" defer></script>
     <script src="./js/dailyfaith.js" defer></script>
     <script src="./js/rosary.js" defer></script>
+    <script src="./js/waystations.js" defer></script>
     <script src="./js/gallery.js" defer></script>
     <script src="./js/contact.js" defer></script>
     <script src="./js/ui.js" defer></script>
     <script src="./js/experience.js" defer></script>
+    <script src="./js/pwa.js" defer></script>
     <script src="./js/main.js" defer></script>
 
   </body>
